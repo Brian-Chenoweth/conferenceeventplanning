@@ -15,7 +15,6 @@ let cx = classNames.bind(styles);
  */
 export default function Footer({
   siteTitle,
-  title,
   menuItems, // PRIMARY footer menu
   navOneMenuItems, // SECONDARY footer menu
   navTwoMenuItems, // TERTIARY footer menu
