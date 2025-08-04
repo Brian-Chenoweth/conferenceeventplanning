@@ -13,7 +13,6 @@ import {
   SEO,
   Header,
   Footer,
-  Posts,
   Testimonials,
   HomepageCampusLife,
   HomepageIntro,
@@ -26,7 +25,6 @@ import {
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
-const postsPerPage = 4;
 
 export default function Component() {
   const { data, loading } = useQuery(Component.query, {
@@ -86,12 +84,6 @@ export default function Component() {
 
           <HomepageFoodInsecurity />
 
-          <section className={styles.posts}>
-            <Heading className={styles.heading} level="h2">
-              News
-            </Heading>
-            <Posts posts={data.posts?.nodes} id="posts-list" />
-          </section>
 
         </div>
 
@@ -115,27 +107,19 @@ Component.variables = () => {
     footerLocation: MENUS.FOOTER_LOCATION,
     footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
     footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
-    first: postsPerPage,
   };
 };
 
 Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
-  ${Posts.fragments.entry}
   ${Testimonials.fragments.entry}
   query GetPageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $footerSecondaryLocation: MenuLocationEnum
     $footerTertiaryLocation: MenuLocationEnum
-    $first: Int
   ) {
-    posts(first: $first) {
-      nodes {
-        ...PostsItemFragment
-      }
-    }
     testimonials {
       nodes {
         ...TestimonialsFragment

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { NavigationMenu } from '../';
 
 import styles from './Footer.module.scss';
+import { GetStarted } from 'components';
 
 let cx = classNames.bind(styles);
 
@@ -20,7 +21,11 @@ export default function Footer({
   navTwoMenuItems, // TERTIARY footer menu
 }) {
   return (
+    <>
+    <GetStarted />
     <footer className={cx('footer')}>
+
+      {/* Footer Navigation */}
       <div className="container">
 
         <div className={cx('footer-nav-contact-info')}>
@@ -78,5 +83,6 @@ export default function Footer({
       </div>
       {console.log(menuItems, navOneMenuItems, navTwoMenuItems)}
     </footer>
+    </>
   );
 }

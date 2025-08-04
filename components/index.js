@@ -4,6 +4,7 @@ import CTA from './CTA';
 import EntryHeader from './EntryHeader';
 import FeaturedImage from './FeaturedImage';
 import FormatDate from './FormatDate';
+import GetStarted from './GetStarted';
 import Heading from './Heading';
 import HomepageAdvancing from './HomepageAdvancing';
 import HomepageAttainableHousing from './HomepageAttainableHousing';
@@ -40,6 +41,7 @@ export {
   EntryHeader,
   FeaturedImage,
   FormatDate,
+  GetStarted,
   Heading,
   HomepageAdvancing,
   HomepageAttainableHousing,
