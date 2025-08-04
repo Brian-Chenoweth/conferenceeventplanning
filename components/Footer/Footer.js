@@ -1,7 +1,13 @@
 import classNames from 'classnames/bind';
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaXTwitter,
+} from 'react-icons/fa6';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import appConfig from 'app.config.js';
 
 import { NavigationMenu } from '../';
 
@@ -15,6 +21,7 @@ let cx = classNames.bind(styles);
  */
 export default function Footer({
   siteTitle,
+  title,
   menuItems, // PRIMARY footer menu
   navOneMenuItems, // SECONDARY footer menu
   navTwoMenuItems, // TERTIARY footer menu
@@ -31,11 +38,12 @@ export default function Footer({
 
           <div className={cx('contact-info')}>
             <a href="/" className={cx('cppText')}>
-              {'Cal Poly Conference and Event Planning'}
+              {title ?? 'Cal Poly Partners'}
             </a>
-            <a href="tel:8057561451" className={cx('phone')}>
-              (805) 756-1451
+            <a href="tel:7600" className={cx('phone')}>
+              (805) 756-7600
             </a>
+
           </div>
         </div>
 
