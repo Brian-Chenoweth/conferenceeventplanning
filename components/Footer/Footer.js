@@ -2,10 +2,10 @@ import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { GetStarted } from 'components';
 import { NavigationMenu } from '../';
 
 import styles from './Footer.module.scss';
-import { GetStarted } from 'components';
 
 let cx = classNames.bind(styles);
 
@@ -35,9 +35,11 @@ export default function Footer({
           </div>
 
           <div className={cx('contact-info')}>
-            <a href="/" className={cx('cppText')}>
-              {title ?? 'Cal Poly Partners'}
-            </a>
+            <Link href="/" legacyBehavior>
+              <a className={cx('cppText')}>
+                {title ?? 'Cal Poly Partners'}
+              </a>
+            </Link>
             <a href="tel:7600" className={cx('phone')}>
               (805) 756-7600
             </a>
