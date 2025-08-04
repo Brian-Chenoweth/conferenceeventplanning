@@ -1,13 +1,6 @@
 import classNames from 'classnames/bind';
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaXTwitter,
-} from 'react-icons/fa6';
 import Image from 'next/image';
 import Link from 'next/link';
-import appConfig from 'app.config.js';
 
 import { NavigationMenu } from '../';
 
