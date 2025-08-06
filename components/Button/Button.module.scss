@@ -8,14 +8,14 @@
   background-color: transparent;
   text-transform: uppercase;
   padding: 1.75rem 3.5rem;
-  font-size: 1.25rem;
+  // font-size: 1.25rem;
   appearance: none;
   font-weight: $font-weight-bold;
 
   &.button-primary {
-    color: var(--color-black);
-    border-color: var(--color-black);
-    background-color: var(--color-white);
+    color: var(--color-white);
+    border-color: #36863A;
+    background-color: #36863A;
   }
 
   &.button-secondary {
@@ -25,9 +25,9 @@
   }
 
   &:hover {
-    border-color: var(--color-black);
-    background-color: var(--color-black);
-    color: var(--color-white);
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white) !important;
   }
 
   &:focus {

@@ -1,4 +1,7 @@
+import className from 'classnames/bind';
 import Link from 'next/link';
+
+import { Button } from 'components';
 
 import styles from './GetStarted.module.scss';
 
@@ -6,17 +9,15 @@ import styles from './GetStarted.module.scss';
 export default function GetStarted() {
   return (
     <div className={styles.cta}>
-      <div className="wp-block-group intro-text bg-green-dark has-global-padding is-layout-constrained wp-block-group-is-layout-constrained container">
-        <h2 className="wp-block-heading">Advancing Learn by Doing
-        </h2>
-        <p>We are an active supporter of Cal Poly’s “Learn by Doing” philosophy. Cal Poly Partners provides fiscal and administrative services to commercial units that involve student staffing and learning. From Swanton Pacific Ranch to the Center for Innovation and Entrepreneurship, University Graphic Systems, and various agricultural enterprise operations, we facilitate hands-on learning experiences that prepare students for the real world.</p>
-        <p>
-        <Link legacyBehavior href="https://vimeopro.com/user3345556/cal-poly-corporation-2022-23-impact-report" target="_blank" rel="noopener">
-        <a title="Partnering in Mustang Success">
-        Partnering in Mustang Success
-        </a>
-        </Link>
-        </p>
+      <div className="wp-block-group centered bg-green has-global-padding is-layout-constrained wp-block-group-is-layout-constrained container">
+        <h2 className="wp-block-heading">Let's Get it Started</h2>
+        <p>Share the details of your event with us, and together, we’ll start creating the memorable experience that you’re looking for.</p>
+        
+          
+        <Button href="/contact/" styleType="primary">
+            Get Started
+        </Button>
+        
       </div>
     </div>
   );

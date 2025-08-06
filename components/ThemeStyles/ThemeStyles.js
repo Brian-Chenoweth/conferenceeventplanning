@@ -2,21 +2,21 @@ import appConfig from '../../app.config';
 
 const themes = {
   blue: {
-    '--color-black': '#000',
+    '--color-black': '#2D2D2B',
     '--color-primary': '#000066',
     '--color-secondary': '#0969da',
     '--color-tertiary': '#CCCCCC',
     '--color-white': '#FFFFFF',
   },
   red: {
-    '--color-black': '#000',
+    '--color-black': '#2D2D2B0',
     '--color-primary': '#660000',
     '--color-secondary': '#B50505',
     '--color-tertiary': '#CCCCCC',
     '--color-white': '#FFFFFF',
   },
   green: {
-    '--color-black': '#000',
+    '--color-black': '#2D2D2B',
     '--color-primary': '#154734',
     '--color-secondary': '#f2c75c',
     '--color-tertiary': '#B7CDC26B',
