@@ -257,11 +257,10 @@
 
 .green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .yellow-image-right, .bg-green, .bg-white, .bg-yellow, .bg-green-dark {
     // padding: 4rem 0;
-    padding: 0;
-    margin: 4rem 0;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     @media (min-width: $breakpoint-small) {
-      margin: 7rem 0;
-      padding: 0;
+      padding: 6rem 0;
   }
   
   position: relative;
