@@ -4,10 +4,9 @@ import Link from 'next/link';
 
 import { GetStarted } from 'components';
 import { NavigationMenu } from '../';
-
 import styles from './Footer.module.scss';
 
-let cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 /**
  * The Blueprint's Footer component
