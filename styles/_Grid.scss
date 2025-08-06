@@ -304,6 +304,18 @@
     // }
   }
 
+  a:not([role="button"]) {
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      display: inline-block;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      content: '\f061';
+      color: #BD8B13;
+      margin-right: .5rem;
+    }
+  }
+
     a.inline {
     text-transform: none;
     &:before {
