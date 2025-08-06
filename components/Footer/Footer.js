@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from './Footer.module.scss';
 
 import { GetStarted } from 'components';
 import { NavigationMenu } from '../';
-import styles from './Footer.module.scss';
 
 const cx = classNames.bind(styles);
 
