@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Button } from 'components';
+
 import styles from './GetStarted.module.scss';
 
 export default function GetStarted() {
