@@ -92,9 +92,8 @@ export default function Header({ className, menuItems }) {
 
       <div className={headerContentClasses}>
         <div className={cx('bar')}>
-          <a href="/" className={cx('titleName')}>
-            Conference and Event Planning
-          </a>
+
+          <Link href="/" className={cx('titleName')}>Conference and Event Planning</Link>
 
           <button
             type="button"
