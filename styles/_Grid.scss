@@ -255,12 +255,12 @@
 
 }
 
-.green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .yellow-image-right, .bg-green, .bg-white, .bg-yellow, .bg-green-dark {
+.green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .yellow-image-right, .bg-green, .bg-white, .bg-yellow, .bg-green-dark, .three-cards {
     // padding: 4rem 0;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
     @media (min-width: $breakpoint-small) {
-      padding: 6rem 0;
+      padding: 6rem 0 !important;
   }
   
   position: relative;
@@ -293,15 +293,6 @@
     &:hover {
       color: var(--color-secondary);
     }
-    // &::before {
-    //   font-family: 'Font Awesome 6 Free';
-    //   display: inline-block;
-    //   text-rendering: auto;
-    //   -webkit-font-smoothing: antialiased;
-    //    content: '\f061';
-    //    color: #BD8B13;
-    //    margin-right: .5rem;
-    // }
   }
 
   a:not([role="button"]) {
@@ -710,4 +701,63 @@ h2.intro-text {
   .posts-list {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+}
+
+.three-cards {
+  display: grid !important;
+  grid-template-columns: 30% 40% 30%;
+
+  .wp-block-column {
+    display: flex;
+    flex-direction: column;
+
+    // display: grid;
+    // grid-template-rows: 70% 30%;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+    &:first-of-type {
+      background-color: var(--color-tertiary);
+    }
+    &:nth-of-type(2) {
+      background-color: #b7cdc2;
+    }
+    &:last-of-type {
+      background-color: #e4e3d3;
+    }
+
+    div.wp-block-group {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem !important;
+    }
+
+    h3 {
+      margin-bottom: 2rem;
+      width: 100%;
+      font-family: "Utopia Std";
+      font-size: 3.2rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 4rem;
+      color: #154734;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    figure {margin: 0;}
+
+
+  }
+
 }

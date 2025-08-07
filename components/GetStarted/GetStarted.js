@@ -1,13 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'components';
-
 import styles from './GetStarted.module.scss';
 
 export default function GetStarted() {
-  // useMemo ensures the heading doesn't change on every re-render
-  const heading = useMemo(() => {
+  const [heading, setHeading] = useState("Let's Get it Started");
+
+  useEffect(() => {
     const options = ["Let's Get it Started", "Ready to Get Started?"];
-    return options[Math.floor(Math.random() * options.length)];
+    const random = options[Math.floor(Math.random() * options.length)];
+    setHeading(random);
   }, []);
 
   return (
