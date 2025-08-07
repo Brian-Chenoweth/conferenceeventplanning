@@ -203,15 +203,11 @@
 
 .intro-text {
   padding: 5.5rem 0 7.5rem 0;
-  // text-align: center;
   @media (min-width: $breakpoint-small) {
     text-align: center;
   }
   h2 {
     margin-bottom: 3.5rem;
-  }
-  p:last-of-type {
-    // margin-bottom: 0;
   }
   a {
     transition: all .3s;
@@ -230,18 +226,13 @@
     line-height: 40px;
   }
   .wp-block-button__link {
-    // border: 0 !important;
     background-color: #36863A;
     color: white;
     text-transform: uppercase;
-    // font-weight: 400;
-    // color: #FFF;
     font-family: "Source Sans Pro";
-    // font-size: 1.5rem;
     padding: 2rem;
     font-style: normal;
     font-weight: 700;
-    // line-height: 126.234%;
     letter-spacing: 0.6px;
     transition: all .3s;
     text-decoration: none;
@@ -251,12 +242,12 @@
       color: white;
       background-color: var(--color-primary);
     }
+    &::before {display: none !important;}
   }
 
 }
 
 .green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .yellow-image-right, .bg-green, .bg-white, .bg-yellow, .bg-green-dark, .three-cards {
-    // padding: 4rem 0;
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
     @media (min-width: $breakpoint-small) {
@@ -264,7 +255,6 @@
   }
   
   position: relative;
-  // z-index: 0;
 
   &::before {
     content: '';
@@ -277,7 +267,6 @@
   }
 
   .wp-block-media-text__content {
-    // padding: 0 4% 0 4% !important;
     @media screen and (max-width: 600px) {
       padding: 0 !important;
       margin-top: 2rem;
@@ -439,12 +428,8 @@
   }
   td {
     border: none;
-    // border-bottom: 10px solid white;
     padding: 2rem;
     margin: 0;
-  }
-  td, th {
-    // border: 10px solid white;
   }
   th {
     color: white;
@@ -527,8 +512,7 @@
 .wp-block-image.parallax {
   position: relative;
   overflow: hidden;
-  height: 600px; // Adjust as needed
-    // Break out of layout constraints
+  height: 600px;
   width: 100vw;
   max-width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -541,7 +525,7 @@
   top: -25%;
   left: 0;
   width: 100%;
-  height: 130%; // Give the image breathing room vertically
+  height: 130%;
   object-fit: cover;
   object-position: center top;
 
@@ -561,7 +545,6 @@
 }
 .carousel.carousel-slider .control-arrow:hover {
   background-color: transparent;
-  // color: var(--color-primary);
 }
 
 .carousel figure {
@@ -570,14 +553,13 @@
 
 .carousel .slide {
   transition: transform 0.3s ease, opacity 0.3s ease;
-  // opacity: 0.6;
   transform: scale(0.9);
 }
 
 .carousel .slide.selected {
-  transform: scale(1.1);   // Make center slide larger
-  opacity: 1;              // Full opacity for center
-  z-index: 2;              // Bring it above other slides
+  transform: scale(1.1);   
+  opacity: 1;              
+  z-index: 2;             
 }
 
 
@@ -710,9 +692,6 @@ h2.intro-text {
   .wp-block-column {
     display: flex;
     flex-direction: column;
-
-    // display: grid;
-    // grid-template-rows: 70% 30%;
 
     img {
       height: 100%;
