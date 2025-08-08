@@ -909,7 +909,9 @@ h2.intro-text {
     color: var(--color-primary);
     font-weight: 600;
     font-size: 1.8rem;
-
+    @media (min-width: $breakpoint-small) {
+      text-align: center;
+    }
     border-bottom: 1px solid #efefee; 
   }
 
