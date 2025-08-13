@@ -113,6 +113,7 @@ export default function MyApp({ Component, pageProps }) {
           `,
         }}
       />
+      <script src="/team-lightbox.js" defer />
 
       <ThemeStyles />
       <FaustProvider pageProps={pageProps}>
