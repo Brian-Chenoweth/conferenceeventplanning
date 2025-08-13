@@ -17,7 +17,7 @@
 
 @media (min-width: $breakpoint-medium) {
   .container {
-    width: percentage(10/12);
+    width: percentage(11/12);
   }
 }
 
@@ -1010,5 +1010,39 @@ article form {
     font-weight: 400;
     line-height: 28.608px;
     margin-bottom: 0 !important;
+  }
+  .content-wrap {
+    display:grid;
+    @media (min-width: $breakpoint-small) {
+      grid-template-columns:39% 59%;
+    }
+    gap:2%;
+    align-items:start;
+  }
+}
+
+.team {
+    a {
+    transition: all .3s;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    &:hover {
+      color: var(--color-secondary);
+      cursor: pointer;
+    }
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      display: inline-block;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      content: '\f061';
+      color: #BD8B13;
+      margin-right: .5rem;
+    }
+  }
+  .three-cards-regular:first-of-type {
+    margin-bottom: 0;
   }
 }

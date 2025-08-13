@@ -52,7 +52,7 @@
   const panel = document.createElement('div');
   panel.classList.add('lightbox-panel');
   panel.style.cssText =
-    'position:relative;max-width:820px;width:min(92vw,820px);max-height:85vh;overflow:auto;background:#fff;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)';
+    'position:relative;max-width:1024px;width:min(92vw,1024px);max-height:85vh;overflow:auto;background:#fff;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)';
   overlay.appendChild(panel);
 
   const closeBtn = document.createElement('button');
@@ -60,7 +60,7 @@
   closeBtn.setAttribute('aria-label', 'Close');
   closeBtn.textContent = '×';
   closeBtn.style.cssText =
-    'position:absolute;top:8px;right:12px;width:36px;height:36px;border:none;border-radius:18px;background:#fff;font-size:22px;line-height:34px;cursor:pointer';
+    'position:absolute;top:8px;right:12px;width:45px;height:45px;border:none;border-radius:18px;background:#fff;font-size:28px;line-height:34px;cursor:pointer';
   closeBtn.onclick = hide;
   panel.appendChild(closeBtn);
 
@@ -119,19 +119,18 @@
       const imgAlt = safeTitle;
 
       const html = `
-        <div style="display:grid;grid-template-columns:180px 1fr;gap:16px;align-items:start;">
+        <div class="content-wrap">
           <div>
             <img
               src="${staticSrc}"
               alt="${imgAlt}"
-              style="width:180px;height:180px;object-fit:cover;border-radius:12px;"
               loading="lazy"
               onerror="this.style.display='none'"
             />
           </div>
           <div>
-            ${safeRole ? `<h4 style="margin:0 0 12px 0;font-weight:600;">${safeRole}</h4>` : ''}
-            <h3 style="margin:0 0 6px 0;font-size:24px;line-height:1.2;">${safeTitle}</h3>
+            ${safeRole ? `<h4 style="margin-top:50px;">${safeRole}</h4>` : ''}
+            <h3>${safeTitle}</h3>
             <div>${b.html || '<p>No bio available yet.</p>'}</div>
           </div>
         </div>
