@@ -2,10 +2,8 @@
 
 .footer {
   position: relative;
-  // background-color: var(--color-primary);
   background: linear-gradient(135deg, var(--color-primary) 15%, #26825f);
   padding: 10rem 3rem;
-  // margin-top: 4rem;
   color: var(--color-white);
 
   a {
@@ -21,9 +19,9 @@
 
   h3 {
     color: var(--color-lime);
-   font-family: abolition, sans-serif;
-font-style: normal;
-font-weight: 400;
+    font-family: abolition, sans-serif;
+    font-style: normal;
+    font-weight: 400;
   }
 
   .footer-nav-contact-info {
@@ -66,7 +64,6 @@ font-weight: 400;
 
 .social-links {
   display: flex;
-  // justify-content: center;
   margin-bottom: 3rem;
 
   ul {
@@ -77,7 +74,6 @@ font-weight: 400;
 
   li {
     margin: 0;
-    // margin-right: 1.5rem;
 
     &:last-child {
       a {padding-right: 0;}
@@ -89,8 +85,6 @@ font-weight: 400;
     width: 5rem;
     height: 5rem;
     padding: .75rem;
-    // border: 1px solid var(--color-white);
-    // border-radius: 99rem;
     vertical-align: middle;
     font-size:2.75rem;
     justify-content: center;
@@ -136,7 +130,6 @@ font-weight: 400;
 .nav-one, .nav-two {
     font-family: 'Source Sans Pro', sans-serif;
     margin-top: 2rem;
-    // a {font-size: 1.35rem;}
 }
 
 .logo-address {
@@ -167,10 +160,7 @@ font-weight: 400;
 
 .nav, .quick {
   display: flex;
-  // justify-content: center;
-  // margin-bottom: 3rem;
   margin-right: auto;
-  // font-size: 1.5rem;
 
 
   ul {
@@ -219,7 +209,6 @@ font-weight: 400;
 }
 
 .copyright {
-  // text-align: center;
-   margin-top: 2rem;
+  margin-top: 2rem;
   font-size: 1.5rem;
 }

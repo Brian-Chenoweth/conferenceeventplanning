@@ -2,11 +2,7 @@
 
 .entry-header {
   color: var(--color-white);
-    
-  // @media (min-width: $breakpoint-small) {
-  //   margin-top: 155px;
-  // }
-  margin-top: 155px;
+  margin-top: 15.5rem;
 }
 
 .EntryHeader_image {
@@ -16,13 +12,8 @@
     margin: 0;
   }
 
-
 }
-  @media (min-width: $breakpoint-small) {
-  .featured-image {
-    // height: 1000px !important;
-  }
-  }
+
 
 .heading-home {
     position: absolute;
