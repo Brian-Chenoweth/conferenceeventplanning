@@ -23,7 +23,7 @@ import { createPortal } from 'react-dom';
 const ContactForm = dynamic(() => import('components/ContactForm'), { ssr: false });
 
 const TOKEN = '<!-- FORMSPREE_CONTACT -->';
-const SLOT_HTML = '<div></div>';
+const SLOT_HTML = '<div id="contact-form-slot"></div>';
 
 // Portals the ContactForm into the placeholder div after mount.
 function ContactFormIntoSlot() {

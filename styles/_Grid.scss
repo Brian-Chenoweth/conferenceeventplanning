@@ -934,6 +934,10 @@ h2.intro-text {
   }
 }
 
+#contact-form-slot {
+  width: 100%;
+}
+
 
 .contact-form {
   display: grid;
@@ -994,6 +998,10 @@ article form {
     grid-column: 1 / -1;
   }
 
+}
+
+form.contact-form label[for="message"] {
+  grid-column: 1 / -1;   /* span full width */
 }
 
 

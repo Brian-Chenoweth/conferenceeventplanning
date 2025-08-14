@@ -66,9 +66,9 @@ export default function ContactForm() {
       <ValidationError prefix="Email" field="email" errors={state.errors} />
       {confirmError && <p className={styles.errorMsg}>• {confirmError}</p>}
 
-      <label htmlFor="message" className="row">
+      <label htmlFor="message">
         <span>Message:</span>
-        <textarea id="message" name="message" rows={5} />
+        <textarea id="message" name="message" />
       </label>
       <ValidationError prefix="Message" field="message" errors={state.errors} />
 
