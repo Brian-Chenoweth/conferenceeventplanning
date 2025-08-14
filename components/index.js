@@ -1,4 +1,5 @@
 import Button from './Button';
+import ContactForm from './ContactForm';
 import ContentWrapper from './ContentWrapper';
 import CTA from './CTA';
 import EntryHeader from './EntryHeader';
@@ -36,6 +37,7 @@ import SearchRecommendations from './SearchRecommendations';
 
 export {
   Button,
+  ContactForm,
   ContentWrapper,
   CTA,
   EntryHeader,

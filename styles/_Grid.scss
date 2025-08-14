@@ -937,7 +937,9 @@ h2.intro-text {
 
 .contact-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+   @media (min-width: $breakpoint-small) {
+    grid-template-columns: 1fr 1fr;
+   }
   grid-gap: 50px;
   width: 100%;
 

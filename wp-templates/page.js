@@ -15,6 +15,26 @@ import {
   SEO,
 } from '../components';
 
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+
+// Client-only form to avoid SSR/client mismatch
+const ContactForm = dynamic(() => import('components/ContactForm'), { ssr: false });
+
+const TOKEN = '<!-- FORMSPREE_CONTACT -->';
+const SLOT_HTML = '<div></div>';
+
+// Portals the ContactForm into the placeholder div after mount.
+function ContactFormIntoSlot() {
+  const [slot, setSlot] = useState(null);
+  useEffect(() => {
+    setSlot(document.getElementById('contact-form-slot'));
+  }, []);
+  if (!slot) return null;
+  return createPortal(<ContactForm />, slot);
+}
+
 export default function Component(props) {
   // Loading state for previews
   if (props.loading) {
@@ -26,6 +46,9 @@ export default function Component(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
+
+  // Replace the marker with a stable placeholder DIV for SSR
+  const htmlWithSlot = (content ?? '').split(TOKEN).join(SLOT_HTML);
 
   return (
     <>
@@ -47,7 +70,10 @@ export default function Component(props) {
         <>
           <EntryHeader title={title} image={featuredImage?.node} />
           <div className="container">
-            <ContentWrapper content={content} />
+            {/* Server and client markup match here */}
+            <ContentWrapper content={htmlWithSlot} />
+            {/* After hydration, portal the interactive form into the slot */}
+            <ContactFormIntoSlot />
           </div>
         </>
       </Main>
@@ -57,7 +83,6 @@ export default function Component(props) {
         navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
         quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
       />
-
     </>
   );
 }
@@ -72,7 +97,6 @@ Component.variables = ({ databaseId }, ctx) => {
     asPreview: ctx?.asPreview,
   };
 };
-
 
 Component.query = gql`
   ${BlogInfoFragment}
