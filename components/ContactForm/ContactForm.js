@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
+
 import styles from './ContactForm.module.scss';
 
 export default function ContactForm() {
