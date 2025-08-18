@@ -5,17 +5,17 @@ import styles from './HomepageVision.module.scss';
 
 export default function HomepageVision() {
   return (
-    <div className="bg-green">
+    <div className="bg-beige">
     <section className={styles.mintBand}>
       <div className={styles.container}>
-        <div className={styles.layout}>
+        <div className={`${styles.layout} ${styles.mirrored}`}>
           {/* Media */}
           <figure className={styles.media}>
             <Image
-              src="/home/networking-event-guests-laughing-strawberry-tables.jpg"
+              src="/home/wedding-cake-slices-outdoor-reception.jpg"
               width={1600}
               height={1067}
-              alt="Guests laughing and socializing around red tablecloth cocktail tables with bowls of strawberries at a networking event."
+              alt="Plated slices of wedding cake with pink and yellow frosting served at an outdoor reception, with a server arranging desserts in the background."
               className={styles.image}
               priority
             />
@@ -23,24 +23,23 @@ export default function HomepageVision() {
 
           {/* Card */}
           <div className={styles.card}>
-            <h2 className={styles.heading}>Partner with the Event Planning A-Team</h2>
+            <h2 className={styles.heading}>Bring your vision to life</h2>
 
             <p>
-              As Cal Poly’s in house event planning team, our staff is embedded with all aspects of the
-              university, its systems, offerings and the colleagues who make it run.
+              Imagine hosting your event in the heart of a vibrant coastal town, surrounded by stunning landscapes and top-notch amenities. Our expert team will handle everything—from venue selection and catering to logistics and staffing—making your event successful.
             </p>
             <p className={styles.bodyBottom}>
-              This enables us to offer seamless event solutions and easily manage, organize and schedule all
-              facets of your successful event and amazing experience.
+              We have the expertise and experience to bring your dream to reality. 
             </p>
 
             <p className={styles.ctaRow}>
-              <Link legacyBehavior href="/plan/team/">
-                <a className={styles.link} title="Meet the team">
-                  <span>Meet the team</span>
+              <Link legacyBehavior href="/envision/">
+                <a className={styles.link} title="See the Possibilities">
+                  <span>See the Possibilities</span>
                 </a>
               </Link>
             </p>
+            
           </div>
         </div>
       </div>
