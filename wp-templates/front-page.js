@@ -16,7 +16,7 @@ import {
   Testimonials,
   HomepageCampusLife,
   HomepageIntro,
-  HomepageNonprofit,
+  HomepageATeam,
   HomepageTicker,
   HomepageAdvancing,
   HomepageAttainableHousing,
@@ -62,7 +62,7 @@ export default function Component() {
 
           <HomepageIntro />
 
-          <HomepageNonprofit />
+          <HomepageATeam />
           
         </div>  
 

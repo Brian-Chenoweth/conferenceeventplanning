@@ -13,7 +13,7 @@ import HomepageCampusLife from './HomepageCampusLife';
 import HomepageEmpowering from './HomepageEmpowering';
 import HomepageFoodInsecurity from './HomepageFoodInsecurity';
 import HomepageIntro from './HomepageIntro';
-import HomepageNonprofit from './HomepageNonprofit';
+import HomepageATeam from './HomepageATeam';
 import HomepageTestimonials from './HomepageTestimonials';
 import HomepageTicker from './HomepageTicker';
 import Header from './Header';
@@ -51,7 +51,7 @@ export {
   HomepageEmpowering,
   HomepageFoodInsecurity,
   HomepageIntro,
-  HomepageNonprofit,
+  HomepageATeam,
   HomepageTestimonials,
   HomepageTicker,
   Header,

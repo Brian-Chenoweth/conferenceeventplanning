@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './HomepageNonprofit.module.scss';
+import styles from './HomepageATeam.module.scss';
 
-export default function HomepageNonprofit() {
+export default function HomepageATeam() {
   return (
     <div className="bg-green">
     <section className={styles.mintBand}>
