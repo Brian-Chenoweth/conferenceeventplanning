@@ -19,7 +19,7 @@ import {
   HomepageATeam,
   HomepageVision,
   HomepageCoastalParadise,
-  HomepageAttainableHousing,
+  HomepageParallax,
   HomepageEmpowering,
   HomepageFoodInsecurity,
 } from 'components';
@@ -73,7 +73,7 @@ export default function Component() {
             <HomepageEventOfferings />
           </div>
 
-          <HomepageAttainableHousing />
+          <HomepageParallax />
 
           <HomepageCoastalParadise />
 

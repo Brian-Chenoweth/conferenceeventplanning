@@ -8,7 +8,7 @@ import FormatDate from './FormatDate';
 import GetStarted from './GetStarted';
 import Heading from './Heading';
 import HomepageCoastalParadise from './HomepageCoastalParadise';
-import HomepageAttainableHousing from './HomepageAttainableHousing';
+import HomepageParallax from './HomepageParallax';
 import HomepageEventOfferings from './HomepageEventOfferings';
 import HomepageEmpowering from './HomepageEmpowering';
 import HomepageFoodInsecurity from './HomepageFoodInsecurity';
@@ -46,7 +46,7 @@ export {
   GetStarted,
   Heading,
   HomepageCoastalParadise,
-  HomepageAttainableHousing,
+  HomepageParallax,
   HomepageEventOfferings,
   HomepageEmpowering,
   HomepageFoodInsecurity,

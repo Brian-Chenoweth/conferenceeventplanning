@@ -1,11 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Parallax, Background } from 'react-parallax';
+import { Parallax } from 'react-parallax';
 
-import styles from './HomepageAttainableHousing.module.scss';
+import styles from './HomepageParallax.module.scss';
 
-export default function HomepageAttainableHousing() {
+export default function HomepageParallax() {
    const [height, setHeight] = useState(750);
   useEffect(() => {
     const updateHeight = () => {
