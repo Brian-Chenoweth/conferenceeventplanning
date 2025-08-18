@@ -9,7 +9,7 @@ import GetStarted from './GetStarted';
 import Heading from './Heading';
 import HomepageAdvancing from './HomepageAdvancing';
 import HomepageAttainableHousing from './HomepageAttainableHousing';
-import HomepageCampusLife from './HomepageCampusLife';
+import HomepageEventOfferings from './HomepageEventOfferings';
 import HomepageEmpowering from './HomepageEmpowering';
 import HomepageFoodInsecurity from './HomepageFoodInsecurity';
 import HomepageIntro from './HomepageIntro';
@@ -47,7 +47,7 @@ export {
   Heading,
   HomepageAdvancing,
   HomepageAttainableHousing,
-  HomepageCampusLife,
+  HomepageEventOfferings,
   HomepageEmpowering,
   HomepageFoodInsecurity,
   HomepageIntro,

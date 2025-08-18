@@ -14,7 +14,7 @@ import {
   Header,
   Footer,
   Testimonials,
-  HomepageCampusLife,
+  HomepageEventOfferings,
   HomepageIntro,
   HomepageATeam,
   HomepageVision,
@@ -65,9 +65,13 @@ export default function Component() {
           <HomepageVision />
 
           <HomepageATeam />
-          
 
-          <HomepageCampusLife />
+
+          <div className={styles.testimonials}>
+            <h2 className="wp-block-heading">Discover Our Event Offerings</h2>
+            <p>Let us take care of it. Planning a week-long conference or afternoon event is not everyone&apos;s forte. That is where we shine. And oh, do we shine. From housing to dining and facility coordination to onsite staffing, we can take it from concept to creation.</p>
+            <HomepageEventOfferings />
+          </div>
 
           <HomepageAdvancing />
 
