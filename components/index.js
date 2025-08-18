@@ -7,7 +7,7 @@ import FeaturedImage from './FeaturedImage';
 import FormatDate from './FormatDate';
 import GetStarted from './GetStarted';
 import Heading from './Heading';
-import HomepageAdvancing from './HomepageAdvancing';
+import HomepageCoastalParadise from './HomepageCoastalParadise';
 import HomepageAttainableHousing from './HomepageAttainableHousing';
 import HomepageEventOfferings from './HomepageEventOfferings';
 import HomepageEmpowering from './HomepageEmpowering';
@@ -45,7 +45,7 @@ export {
   FormatDate,
   GetStarted,
   Heading,
-  HomepageAdvancing,
+  HomepageCoastalParadise,
   HomepageAttainableHousing,
   HomepageEventOfferings,
   HomepageEmpowering,

@@ -18,7 +18,7 @@ import {
   HomepageIntro,
   HomepageATeam,
   HomepageVision,
-  HomepageAdvancing,
+  HomepageCoastalParadise,
   HomepageAttainableHousing,
   HomepageEmpowering,
   HomepageFoodInsecurity,
@@ -73,7 +73,7 @@ export default function Component() {
             <HomepageEventOfferings />
           </div>
 
-          <HomepageAdvancing />
+          <HomepageCoastalParadise />
 
           <HomepageAttainableHousing />
 
