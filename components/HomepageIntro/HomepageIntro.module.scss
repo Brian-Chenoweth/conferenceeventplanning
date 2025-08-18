@@ -19,6 +19,16 @@
 
 .homeIntro {
     z-index: 9;
+    margin-bottom: 0 !important;
+    
+
+    p {
+      color: var(--color-primary);
+      font-family: "utopia-std-display", serif;
+      font-size: 2.5rem;
+      line-height: 4rem;
+    }
+
 }
 
 .image {
