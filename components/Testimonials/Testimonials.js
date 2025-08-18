@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import className from 'classnames/bind';
 import { Carousel } from 'react-responsive-carousel';
+
 import TestimonialItem from '../TestimonialItem';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
