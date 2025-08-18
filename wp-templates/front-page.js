@@ -18,7 +18,6 @@ import {
   HomepageIntro,
   HomepageATeam,
   HomepageVision,
-  HomepageTicker,
   HomepageAdvancing,
   HomepageAttainableHousing,
   HomepageEmpowering,
@@ -67,11 +66,6 @@ export default function Component() {
 
           <HomepageATeam />
           
-        </div>  
-
-          <HomepageTicker />
-
-        <div className="container">
 
           <HomepageCampusLife />
 

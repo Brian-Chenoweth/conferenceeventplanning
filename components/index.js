@@ -16,7 +16,6 @@ import HomepageIntro from './HomepageIntro';
 import HomepageATeam from './HomepageATeam';
 import HomepageVision from './HomepageVision';
 import HomepageTestimonials from './HomepageTestimonials';
-import HomepageTicker from './HomepageTicker';
 import Header from './Header';
 import LoadMore from './LoadMore';
 import Main from './Main';
@@ -55,7 +54,6 @@ export {
   HomepageATeam,
   HomepageVision,
   HomepageTestimonials,
-  HomepageTicker,
   Header,
   LoadMore,
   Main,
