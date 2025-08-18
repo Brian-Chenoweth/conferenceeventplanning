@@ -73,9 +73,9 @@ export default function Component() {
             <HomepageEventOfferings />
           </div>
 
-          <HomepageCoastalParadise />
-
           <HomepageAttainableHousing />
+
+          <HomepageCoastalParadise />
 
           <HomepageEmpowering />
 
