@@ -1,7 +1,8 @@
 import { gql } from '@apollo/client';
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import className from 'classnames/bind';
 import { Carousel } from 'react-responsive-carousel';
 
@@ -12,24 +13,25 @@ import styles from './Testimonials.module.scss';
 const cx = className.bind(styles);
 
 const PREVIEW_LEN = 100;
-const MOBILE_MAX = 640; // px (match your CSS breakpoint)
+const MOBILE_MAX = 640;
 
-/** Sliding windows of `size` (overlapping) */
 const windows = (arr, size) => {
   if (!arr?.length) return [];
   if (arr.length <= size) return [arr];
   return Array.from({ length: arr.length - size + 1 }, (_, i) => arr.slice(i, i + size));
 };
 
-/** HTML → plain text for preview */
 const htmlToText = (html) => (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 
-/** Stable-ish key helper */
 const tKey = (t, fallback) =>
   t?.databaseId?.toString?.() || t?.id || `${t?.testimonialFields?.testimonialAuthor || 'anon'}-${fallback}`;
 
 export default function Testimonials({ testimonials = [] }) {
-  // --- responsive: detect mobile (client-side only) ---
+  const router = useRouter();
+  const isHome = router.pathname === '/';
+  const singlePerSlide = !isHome; // off-home: show 1 at a time (but keep ALL items)
+
+  // responsive
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${MOBILE_MAX}px)`);
@@ -39,14 +41,14 @@ export default function Testimonials({ testimonials = [] }) {
     return () => mq.removeEventListener?.('change', onChange);
   }, []);
 
-  // Build slides: 1 per slide on mobile, 3-per-view (advance 1) on desktop
+  // Build slides without trimming the dataset
   const slides = useMemo(
-    () => windows(testimonials, isMobile ? 1 : 3),
-    [testimonials, isMobile]
+    () => windows(testimonials, singlePerSlide ? 1 : (isMobile ? 1 : 3)),
+    [testimonials, singlePerSlide, isMobile]
   );
 
-  // Arrows: mobile if >1, desktop if >3
-  const showNav = isMobile ? testimonials.length > 1 : testimonials.length > 3;
+  // Show arrows if there is more than one slide to navigate
+  const showNav = slides.length > 1;
 
   const [expanded, setExpanded] = useState({});
   const toggle = (key) => setExpanded((s) => ({ ...s, [key]: !s[key] }));
@@ -58,21 +60,21 @@ export default function Testimonials({ testimonials = [] }) {
         showThumbs={false}
         showStatus={false}
         showArrows={showNav}
-        infiniteLoop={showNav && slides.length > 1}
+        infiniteLoop={showNav}
         renderArrowPrev={
-          showNav ? (click) => <FaChevronCircleLeft className={cx('arrow')} onClick={click} /> : undefined
+          showNav ? (click) => <FaChevronLeft className={cx('arrow')} onClick={click} /> : undefined
         }
         renderArrowNext={
-          showNav ? (click) => <FaChevronCircleRight className={cx('arrow')} onClick={click} /> : undefined
+          showNav ? (click) => <FaChevronRight className={cx('arrow')} onClick={click} /> : undefined
         }
       >
         {slides.map((group, slideIdx) => (
-          <div key={`slide-${slideIdx}`} className={cx('slideGroup', { mobile: isMobile })}>
+          <div key={`slide-${slideIdx}`} className={cx('slideGroup', { mobile: isMobile || singlePerSlide })}>
             {group.map((t, idx) => {
               const key = tKey(t, `s${slideIdx}-i${idx}`);
               const fullHtml = t?.testimonialFields?.testimonialContent || '';
               const preview = htmlToText(fullHtml);
-              const needsToggle = preview.length > PREVIEW_LEN;
+              const needsToggle = !singlePerSlide && preview.length > PREVIEW_LEN; // disable Read more off-home
               const isOpen = !!expanded[key];
 
               const img = t?.featuredImage?.node;
@@ -89,9 +91,9 @@ export default function Testimonials({ testimonials = [] }) {
                       <div className={cx('imageWrap')}>
                         <Image
                           src={img.sourceUrl}
-                          alt={img.altText || title || 'Testimonial image'}
-                          width={(img.mediaDetails && img.mediaDetails.width) || 800}
-                          height={(img.mediaDetails && img.mediaDetails.height) || 600}
+                          alt={img?.altText || title || 'Testimonial image'}
+                          width={(img?.mediaDetails && img.mediaDetails.width) || 800}
+                          height={(img?.mediaDetails && img.mediaDetails.height) || 600}
                           className={cx('image')}
                         />
                       </div>
@@ -100,16 +102,23 @@ export default function Testimonials({ testimonials = [] }) {
                     {/* Title */}
                     {title && <h3 className={cx('title')}>{title}</h3>}
 
-                      <Image
-                        src="/five-stars.png"
-                        alt={'Five Stars'}
-                        width={102}
-                        height={16}
-                        className={cx('stars')}
-                      />
+                    <Image
+                      src="/five-stars.png"
+                      alt="Five Stars"
+                      width={102}
+                      height={16}
+                      className={cx('stars')}
+                    />
 
                     {/* Content */}
-                    {!isOpen ? (
+                    {singlePerSlide ? (
+                      // Off-home: always show full content, no buttons
+                      <div
+                        id={`t-body-${key}`}
+                        className={cx('slideContent container')}
+                        dangerouslySetInnerHTML={{ __html: fullHtml }}
+                      />
+                    ) : !isOpen ? (
                       <>
                         <p className={cx('slideContent')}>
                           {needsToggle ? `${preview.slice(0, PREVIEW_LEN)}…` : preview}
@@ -164,10 +173,7 @@ Testimonials.fragments = {
         node {
           sourceUrl
           altText
-          mediaDetails {
-            width
-            height
-          }
+          mediaDetails { width height }
         }
       }
       testimonialFields {

@@ -1,30 +1,75 @@
+// Footer.js
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
-import { GetStarted } from 'components';
+import { useRouter } from 'next/router';
+import { useQuery, gql } from '@apollo/client';
+
+// ⬇️ Import directly to avoid circular deps with the barrel
+import GetStarted from '../GetStarted';
+import Testimonials from '../Testimonials';
 
 import { NavigationMenu } from '../';
-
 import styles from './Footer.module.scss';
-
 const cx = classNames.bind(styles);
 
-/**
- * The Blueprint's Footer component
- * @return {React.ReactElement} The Footer component.
- */
+// ⬇️ Inline a fragment so we don't depend on Testimonials.fragments
+const FOOTER_TESTIMONIALS_FRAGMENT = gql`
+  fragment FooterTestimonialsFragment on Testimonial {
+    databaseId
+    title
+    featuredImage {
+      node {
+        sourceUrl
+        altText
+        mediaDetails { width height }
+      }
+    }
+    testimonialFields {
+      testimonialContent
+      testimonialJob
+      testimonialAuthor
+    }
+  }
+`;
+
+const FOOTER_TESTIMONIALS_QUERY = gql`
+  ${FOOTER_TESTIMONIALS_FRAGMENT}
+  query FooterTestimonials {
+    testimonials {
+      nodes {
+        ...FooterTestimonialsFragment
+      }
+    }
+  }
+`;
+
 export default function Footer({
   siteTitle,
   title,
-  menuItems, // PRIMARY footer menu
-  navOneMenuItems, // SECONDARY footer menu
-  navTwoMenuItems, // TERTIARY footer menu
+  menuItems,
+  navOneMenuItems,
+  navTwoMenuItems,
 }) {
+  const router = useRouter();
+  const isHome = router.pathname === '/';
+
+  // Only fetch when NOT on homepage
+  const { data: tdata } = useQuery(FOOTER_TESTIMONIALS_QUERY, { skip: isHome });
+  const tnodes = tdata?.testimonials?.nodes ?? [];
+
   return (
     <>
+      {!isHome && tnodes.length > 0 && (
+         <div className="container">
+          {/* <h2>Hear what our clients rave about</h2> */}
+          {/* <p>Read what our satisfied clients have to say about their amazing experiences with us.</p> */}
+          <Testimonials testimonials={tnodes} />
+        </div>
+      )}
+
       <GetStarted />
       <footer className={cx('footer')}>
-        {/* Footer Navigation */}
         <div className="container">
           <div className={cx('footer-nav-contact-info')}>
             <div className={cx('footer-nav')}>
@@ -34,13 +79,9 @@ export default function Footer({
 
             <div className={cx('contact-info')}>
               <Link href="/" legacyBehavior>
-                <a className={cx('cppText')}>
-                  {title ?? 'Cal Poly Partners'}
-                </a>
+                <a className={cx('cppText')}>{title ?? 'Cal Poly Partners'}</a>
               </Link>
-              <a href="tel:7600" className={cx('phone')}>
-                (805) 756-7600
-              </a>
+              <a href="tel:7600" className={cx('phone')}>(805) 756-7600</a>
             </div>
           </div>
 
@@ -60,10 +101,7 @@ export default function Footer({
             </div>
 
             <p>1 Grand Avenue, San Luis Obispo, CA 93407</p>
-
-            <a href="tel:8057561111" className={cx('phone')}>
-              (805) 756-1111
-            </a>
+            <a href="tel:8057561111" className={cx('phone')}>(805) 756-1111</a>
           </div>
 
           <div className={cx('nav-one')}>
