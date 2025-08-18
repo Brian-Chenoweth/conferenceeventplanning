@@ -10,7 +10,6 @@ import Heading from './Heading';
 import HomepageCoastalParadise from './HomepageCoastalParadise';
 import HomepageParallax from './HomepageParallax';
 import HomepageEventOfferings from './HomepageEventOfferings';
-import HomepageEmpowering from './HomepageEmpowering';
 import HomepageFoodInsecurity from './HomepageFoodInsecurity';
 import HomepageIntro from './HomepageIntro';
 import HomepageATeam from './HomepageATeam';
@@ -48,7 +47,6 @@ export {
   HomepageCoastalParadise,
   HomepageParallax,
   HomepageEventOfferings,
-  HomepageEmpowering,
   HomepageFoodInsecurity,
   HomepageIntro,
   HomepageATeam,

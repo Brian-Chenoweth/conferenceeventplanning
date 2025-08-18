@@ -20,7 +20,6 @@ import {
   HomepageVision,
   HomepageCoastalParadise,
   HomepageParallax,
-  HomepageEmpowering,
   HomepageFoodInsecurity,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
@@ -76,8 +75,6 @@ export default function Component() {
           <HomepageParallax />
 
           <HomepageCoastalParadise />
-
-          <HomepageEmpowering />
 
           <HomepageFoodInsecurity />
 
