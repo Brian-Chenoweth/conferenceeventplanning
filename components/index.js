@@ -14,6 +14,7 @@ import HomepageEmpowering from './HomepageEmpowering';
 import HomepageFoodInsecurity from './HomepageFoodInsecurity';
 import HomepageIntro from './HomepageIntro';
 import HomepageATeam from './HomepageATeam';
+import HomepageVision from './HomepageVision';
 import HomepageTestimonials from './HomepageTestimonials';
 import HomepageTicker from './HomepageTicker';
 import Header from './Header';
@@ -52,6 +53,7 @@ export {
   HomepageFoodInsecurity,
   HomepageIntro,
   HomepageATeam,
+  HomepageVision,
   HomepageTestimonials,
   HomepageTicker,
   Header,

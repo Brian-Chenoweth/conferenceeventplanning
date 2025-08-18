@@ -17,6 +17,7 @@ import {
   HomepageCampusLife,
   HomepageIntro,
   HomepageATeam,
+  HomepageVision,
   HomepageTicker,
   HomepageAdvancing,
   HomepageAttainableHousing,
@@ -61,6 +62,8 @@ export default function Component() {
         <div className="container">
 
           <HomepageIntro />
+
+          <HomepageVision />
 
           <HomepageATeam />
           
