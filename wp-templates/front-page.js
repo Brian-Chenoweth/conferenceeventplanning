@@ -74,17 +74,17 @@ export default function Component() {
 
           <HomepageAdvancing />
 
-          <div className={styles.testimonials}>
-            <h2>Hear what our clients rave about</h2>
-            <p>Read what our satisfied clients have to say about their amazing experiences with us.</p>
-            <Testimonials testimonials={data?.testimonials?.nodes} />
-          </div>
-
           <HomepageAttainableHousing />
 
           <HomepageEmpowering />
 
           <HomepageFoodInsecurity />
+
+          <div className={styles.testimonials}>
+            <h2>Hear what our clients rave about</h2>
+            <p>Read what our satisfied clients have to say about their amazing experiences with us.</p>
+            <Testimonials testimonials={data?.testimonials?.nodes} />
+          </div>
 
 
         </div>
