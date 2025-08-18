@@ -5,15 +5,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useQuery, gql } from '@apollo/client';
 
-// ⬇️ Import directly to avoid circular deps with the barrel
+// ⬇ Import directly to avoid circular deps with the barrel
 import GetStarted from '../GetStarted';
 import Testimonials from '../Testimonials';
-
 import { NavigationMenu } from '../';
+
 import styles from './Footer.module.scss';
 const cx = classNames.bind(styles);
 
-// ⬇️ Inline a fragment so we don't depend on Testimonials.fragments
+// ⬇ Inline a fragment so we don't depend on Testimonials.fragments
 const FOOTER_TESTIMONIALS_FRAGMENT = gql`
   fragment FooterTestimonialsFragment on Testimonial {
     databaseId
