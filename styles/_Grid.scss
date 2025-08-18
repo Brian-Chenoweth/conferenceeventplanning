@@ -683,11 +683,11 @@
 
 .carousel .slide {
   transition: transform 0.3s ease, opacity 0.3s ease;
-  transform: scale(0.9);
+  // transform: scale(0.9);
 }
 
 .carousel .slide.selected {
-  transform: scale(1.1);   
+  // transform: scale(1.1);   
   opacity: 1;              
   z-index: 2;             
 }

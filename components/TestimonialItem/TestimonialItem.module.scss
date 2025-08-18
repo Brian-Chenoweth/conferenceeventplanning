@@ -10,12 +10,33 @@
 
 .content {
   font-size: 2.4rem;
-  font-style: italic;
+  // font-style: italic;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-style: italic;
+  }
+
 }
 
+
 .author {
+  color: var(--color-primary);
+  font-family: "Source Sans Pro";    
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 2.4rem;
+  margin: 2rem 0 .25rem 0;
+}
+
+.job {
+  color: var(--color-primary);
+  font-size: 1.25rem;
   text-transform: uppercase;
-  font-size: 1.4rem;
-  font-weight: $font-weight-extra-bold;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: 0.06rem;
 }

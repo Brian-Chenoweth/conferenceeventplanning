@@ -74,9 +74,11 @@ export default function Component() {
 
           <HomepageAdvancing />
 
-          <section className={styles.testimonials}>
+          <div className={styles.testimonials}>
+            <h2>Hear what our clients rave about</h2>
+            <p>Read what our satisfied clients have to say about their amazing experiences with us.</p>
             <Testimonials testimonials={data?.testimonials?.nodes} />
-          </section>
+          </div>
 
           <HomepageAttainableHousing />
 

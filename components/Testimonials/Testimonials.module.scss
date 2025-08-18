@@ -27,7 +27,91 @@
 }
 
 .slide-content {
+  // background-color: pink;
   p:only-child {
     margin-bottom: 0;
   }
+}
+
+// .slideGroup {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr;
+//   grid-gap: 25px;
+//   // margin: 7.5rem 0;
+// }
+
+.slideGroup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+
+  &.mobile {
+    grid-template-columns: 1fr; // one card per slide visually as well
+  }
+}
+
+@media (max-width: 640px) {
+  .slideGroup { grid-template-columns: 1fr; } // redundancy ok if you prefer pure CSS
+}
+
+
+.card {
+  background-color: rgba(228, 227, 211, 0.5);
+  padding: 5rem 2rem;
+  .imageWrap, img {
+    width: 125px;
+    height: 125px;
+  }
+  img {
+    border-radius: 50%;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 1rem 0 3rem 0;
+
+  p {
+    color: var(--color-primary)
+  }
+
+  .readMore, .readLess {
+    color: var(--color-primary);
+    font-size: 1.9rem;
+    border: none;
+    background-color: transparent;
+    text-transform: capitalize;
+    text-decoration: underline;
+    transition: all .3s;
+    &:hover {
+      color: var(--color-secondary);
+      cursor: pointer;
+    }
+  }
+
+}
+
+.testimonials {
+  // margin: 10rem 0;
+}
+
+.stars {
+  width: 102px !important;
+  height: 16px !important;
+  border-radius: 0 !important;
+  margin-bottom: 2rem;
+}
+
+.title {
+  // font-family: Teko;
+color: #154734;
+text-align: center;
+font-family: Teko;
+font-size: 32px;
+font-style: normal;
+font-weight: 400;
+line-height: 32px;
+letter-spacing: 1.6px;
+margin-top: 3rem;
 }
