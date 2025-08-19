@@ -5,6 +5,7 @@ import Image from "next/image";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Captions from "yet-another-react-lightbox/plugins/captions";
+
 import "yet-another-react-lightbox/plugins/captions.css";
 import styles from "./HomepageEventHighlights.module.scss";
 
