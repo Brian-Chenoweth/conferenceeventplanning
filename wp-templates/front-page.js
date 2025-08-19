@@ -35,8 +35,13 @@ export default function Component() {
 
   const { title: siteTitle, description: siteDescription } =
     data?.generalSettings;
-  const primaryMenu = data?.headerMenuItems?.nodes ?? [];
-  const footerMenu = data?.footerMenuItems?.nodes ?? [];
+    const primaryMenu = data?.headerMenuItems?.nodes ?? [];
+    const footerMenu = data?.footerMenuItems?.nodes ?? [];
+  const quickLinks   = data?.quickFooterMenuItems?.nodes ?? [];
+  const aboutLinks   = data?.aboutFooterMenuItems?.nodes ?? [];
+  const navOne       = data?.footerSecondaryMenuItems?.nodes ?? [];
+  const navTwo       = data?.footerTertiaryMenuItems?.nodes ?? [];
+  const resources    = data?.resourcesFooterMenuItems?.nodes ?? [];
 
   const mainBanner = {
     sourceUrl: '/static/banner.jpeg',
@@ -88,12 +93,21 @@ export default function Component() {
         </div>
 
       </Main>
-
+{/* 
       <Footer
         title={siteTitle}
         menuItems={footerMenu}
         navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
         navTwoMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
+      /> */}
+
+      <Footer
+        title={siteTitle}
+        menuItems={quickLinks}                // left column: Quick Footer
+        navOneMenuItems={navOne}              // middle: Footer Secondary
+        navTwoMenuItems={navTwo}              // right: Footer Tertiary
+        resourcesMenuItems={resources} 
+        aboutMenuItems={aboutLinks}        // new Resources block
       />
 
 
@@ -101,52 +115,64 @@ export default function Component() {
   );
 }
 
-Component.variables = () => {
-  return {
-    headerLocation: MENUS.PRIMARY_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
-    footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
-    footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
-  };
-};
+// Component.variables = () => {
+//   return {
+//     headerLocation: MENUS.PRIMARY_LOCATION,
+//     footerLocation: MENUS.FOOTER_LOCATION,
+//     footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
+//     footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
+//   };
+// };
+
+Component.variables = () => ({
+  headerLocation: MENUS.PRIMARY_LOCATION,
+  // was FOOTER_LOCATION — stop using it on the homepage
+   footerLocation: MENUS.FOOTER_LOCATION,
+  quickFooterLocation: MENUS.QUICK_FOOTER_LOCATION,
+  aboutFooterLocation: MENUS.ABOUT_FOOTER_LOCATION,
+  footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
+  footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
+  resourcesFooterLocation: MENUS.RESOURCES_FOOTER_LOCATION,
+});
 
 Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${Testimonials.fragments.entry}
   query GetPageData(
-    $headerLocation: MenuLocationEnum
-    $footerLocation: MenuLocationEnum
-    $footerSecondaryLocation: MenuLocationEnum
-    $footerTertiaryLocation: MenuLocationEnum
+  $headerLocation: MenuLocationEnum
+  $quickFooterLocation: MenuLocationEnum
+  $aboutFooterLocation: MenuLocationEnum
+  $footerSecondaryLocation: MenuLocationEnum
+  $footerTertiaryLocation: MenuLocationEnum
+  $resourcesFooterLocation: MenuLocationEnum
   ) {
     testimonials {
       nodes {
         ...TestimonialsFragment
       }
     }
-    generalSettings {
-      ...BlogInfoFragment
-    }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
-    }
-   footerMenuItems: menuItems(where: { location: $footerLocation }) {
-  nodes {
-    ...NavigationMenuItemFragment
+    generalSettings { ...BlogInfoFragment }
+  headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
   }
-}
-footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }) {
-  nodes {
-    ...NavigationMenuItemFragment
+
+  quickFooterMenuItems: menuItems(where: { location: $quickFooterLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
+    
   }
-}
-footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
-  nodes {
-    ...NavigationMenuItemFragment
+  aboutFooterMenuItems: menuItems(where: { location: $aboutFooterLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
+    
   }
-}
+  footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
+  }
+  footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
+  }
+  resourcesFooterMenuItems: menuItems(where: { location: $resourcesFooterLocation }, first: 100) {
+    nodes { ...NavigationMenuItemFragment }
+  }
   }
 `;

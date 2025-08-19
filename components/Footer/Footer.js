@@ -50,6 +50,8 @@ export default function Footer({
   menuItems,
   navOneMenuItems,
   navTwoMenuItems,
+  resourcesMenuItems,
+  aboutMenuItems,
 }) {
   const router = useRouter();
   const isHome = router.pathname === '/';
@@ -76,6 +78,17 @@ export default function Footer({
               <h3>Quick Links</h3>
               <NavigationMenu className={cx('quick')} menuItems={menuItems} />
             </div>
+
+          <div className={cx('resources')}>
+          <h3>Resources</h3>
+          <NavigationMenu className={cx('nav')} menuItems={resourcesMenuItems} />
+          </div>
+
+
+          <div className={cx('about')}>
+          <h3>about</h3>
+          <NavigationMenu className={cx('nav')} menuItems={aboutMenuItems} />
+          </div>
 
             <div className={cx('contact-info')}>
               <Link href="/" legacyBehavior>
