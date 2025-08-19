@@ -10,7 +10,7 @@ import Heading from './Heading';
 import HomepageCoastalParadise from './HomepageCoastalParadise';
 import HomepageParallax from './HomepageParallax';
 import HomepageEventOfferings from './HomepageEventOfferings';
-import HomepageFoodInsecurity from './HomepageFoodInsecurity';
+import HomepageEventHighlights from './HomepageEventHighlights';
 import HomepageIntro from './HomepageIntro';
 import HomepageATeam from './HomepageATeam';
 import HomepageVision from './HomepageVision';
@@ -47,7 +47,7 @@ export {
   HomepageCoastalParadise,
   HomepageParallax,
   HomepageEventOfferings,
-  HomepageFoodInsecurity,
+  HomepageEventHighlights,
   HomepageIntro,
   HomepageATeam,
   HomepageVision,

@@ -2,16 +2,24 @@
 
 .grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 1fr;
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
+    width: 80%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.item { list-style: none; }
+.item { list-style: none; margin-bottom: 0;}
 
+.wide {
+  @media (min-width: 768px) {
+    grid-column: span 2;  
+  }
+}
 .thumbBtn {
   position: relative;
   display: block;
@@ -21,14 +29,21 @@
   cursor: pointer;
   width: 100%;
   text-align: inherit;
+  height: 100%;
+  margin-bottom: 0;
 }
 
-.thumb { display: block; width: 100%; height: auto; border-radius: 8px; }
+.thumb { 
+  display: block; 
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+  margin-bottom: 0;
+}
 
 .overlay {
   position: absolute;
   inset: 0;
-  border-radius: 8px;
   background: rgba(0, 0, 0, 0.45);
   opacity: 0;
   transition: opacity 160ms ease;
@@ -45,7 +60,7 @@
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 160ms ease, transform 160ms ease;
-  pointer-events: none; // overlay UI doesn't block clicks
+  pointer-events: none;
 }
 
 .thumbBtn:hover .overlay,

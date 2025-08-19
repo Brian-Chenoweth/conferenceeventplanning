@@ -20,7 +20,7 @@ import {
   HomepageVision,
   HomepageCoastalParadise,
   HomepageParallax,
-  HomepageFoodInsecurity,
+  HomepageEventHighlights,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
@@ -76,7 +76,7 @@ export default function Component() {
 
           <HomepageCoastalParadise />
 
-          <HomepageFoodInsecurity />
+          <HomepageEventHighlights />
 
           <div className={styles.testimonials}>
             <h2>Hear what our clients rave about</h2>
