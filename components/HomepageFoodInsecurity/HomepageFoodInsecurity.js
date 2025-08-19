@@ -45,20 +45,24 @@ export default function HomepageFoodInsecurity() {
         <ul className={styles.grid}>
           {slides.map((s, i) => (
             <li key={i} className={styles.item}>
-              <Image
-                src={s.src}
-                alt={s.alt}
-                width={Math.min(s.w, 800)}
-                height={Math.round((Math.min(s.w, 800) / s.w) * s.h)}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className={styles.thumb}
-                onClick={() => {
-                  setIndex(i);
-                  setOpen(true);
-                }}
-                // If using external domains (like placehold.co) and you haven't whitelisted them in next.config.js:
-                {...(s.src.startsWith("http") ? { unoptimized: true } : {})}
-              />
+              <button
+                type="button"
+                className={styles.thumbBtn}
+                onClick={() => { setIndex(i); setOpen(true); }}
+                aria-label={`Open image: ${s.alt}`}
+              >
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  width={Math.min(s.w, 800)}
+                  height={Math.round((Math.min(s.w, 800) / s.w) * s.h)}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className={styles.thumb}
+                  {...(s.src.startsWith("http") ? { unoptimized: true } : {})}
+                />
+                <span className={styles.overlay} aria-hidden="true"></span>
+                <span className={styles.caption}>{s.caption ?? s.alt}</span>
+              </button>
             </li>
           ))}
         </ul>
