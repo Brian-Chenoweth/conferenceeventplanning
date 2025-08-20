@@ -12,7 +12,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './Testimonials.module.scss';
 const cx = className.bind(styles);
 
-const PREVIEW_LEN = 100;
+const PREVIEW_LEN = 125;
 const MOBILE_MAX = 640;
 
 const windows = (arr, size) => {
