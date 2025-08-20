@@ -64,8 +64,6 @@ export default function Footer({
     <>
       {!isHome && tnodes.length > 0 && (
          <div className="container">
-          {/* <h2>Hear what our clients rave about</h2> */}
-          {/* <p>Read what our satisfied clients have to say about their amazing experiences with us.</p> */}
           <Testimonials testimonials={tnodes} />
         </div>
       )}
@@ -74,27 +72,29 @@ export default function Footer({
       <footer className={cx('footer')}>
         <div className="container">
           <div className={cx('footer-nav-contact-info')}>
+
+
+          <div className={cx('about')}>
+            <h3>About</h3>
+            <NavigationMenu className={cx('quick')} menuItems={aboutMenuItems} />
+          </div>
+
+          <div className={cx('resources')}>
+            <h3>Resources</h3>
+            <NavigationMenu className={cx('quick')} menuItems={resourcesMenuItems} />
+          </div>
+            
             <div className={cx('footer-nav')}>
               <h3>Quick Links</h3>
               <NavigationMenu className={cx('quick')} menuItems={menuItems} />
             </div>
 
-          <div className={cx('resources')}>
-          <h3>Resources</h3>
-          <NavigationMenu className={cx('nav')} menuItems={resourcesMenuItems} />
-          </div>
-
-
-          <div className={cx('about')}>
-          <h3>about</h3>
-          <NavigationMenu className={cx('nav')} menuItems={aboutMenuItems} />
-          </div>
-
             <div className={cx('contact-info')}>
               <Link href="/" legacyBehavior>
                 <a className={cx('cppText')}>{title ?? 'Cal Poly Partners'}</a>
               </Link>
-              <a href="tel:7600" className={cx('phone')}>(805) 756-7600</a>
+              <a href="tel:8057567600" className={cx('phone')}>(805) 756-7600</a>
+              <a href="mailto:cep@calpoly.edu" className={cx('phone')}>cep@calpoly.edu</a>
             </div>
           </div>
 
