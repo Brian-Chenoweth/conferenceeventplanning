@@ -44,7 +44,13 @@ export default function Component(props) {
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
+
+  const quickLinks   = props?.data?.quickFooterMenuItems?.nodes ?? [];
+  const aboutLinks   = props?.data?.aboutFooterMenuItems?.nodes ?? [];
+  const navOne       = props?.data?.footerSecondaryMenuItems?.nodes ?? [];
+  const navTwo       = props?.data?.footerTertiaryMenuItems?.nodes ?? [];
+  const resources    = props?.data?.resourcesFooterMenuItems?.nodes ?? [];
+
   const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
 
   // Replace the marker with a stable placeholder DIV for SSR
@@ -79,9 +85,11 @@ export default function Component(props) {
       </Main>
       <Footer
         title={siteTitle}
-        menuItems={footerMenu}
-        navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
-        quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
+        menuItems={quickLinks}                // left column: Quick Footer
+        navOneMenuItems={navOne}              // middle: Footer Secondary
+        navTwoMenuItems={navTwo}              // right: Footer Tertiary
+        resourcesMenuItems={resources}        // new Resources block
+        aboutMenuItems={aboutLinks}
       />
     </>
   );
@@ -91,9 +99,13 @@ Component.variables = ({ databaseId }, ctx) => {
   return {
     databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
+    // was FOOTER_LOCATION — stop using it
     footerLocation: MENUS.FOOTER_LOCATION,
+    quickFooterLocation: MENUS.QUICK_FOOTER_LOCATION,
+    aboutFooterLocation: MENUS.ABOUT_FOOTER_LOCATION,
     footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
     footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
+    resourcesFooterLocation: MENUS.RESOURCES_FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
   };
 };
@@ -105,9 +117,11 @@ Component.query = gql`
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
-    $footerLocation: MenuLocationEnum
+    $quickFooterLocation: MenuLocationEnum
+    $aboutFooterLocation: MenuLocationEnum
     $footerSecondaryLocation: MenuLocationEnum
     $footerTertiaryLocation: MenuLocationEnum
+    $resourcesFooterLocation: MenuLocationEnum
     $asPreview: Boolean = false
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
@@ -123,20 +137,21 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
+
+    quickFooterMenuItems: menuItems(where: { location: $quickFooterLocation }, first: 100) {
+      nodes { ...NavigationMenuItemFragment }
     }
-    footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
+    aboutFooterMenuItems: menuItems(where: { location: $aboutFooterLocation }, first: 100) {
+      nodes { ...NavigationMenuItemFragment }
     }
-    footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
+    footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }, first: 100) {
+      nodes { ...NavigationMenuItemFragment }
+    }
+    footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }, first: 100) {
+      nodes { ...NavigationMenuItemFragment }
+    }
+    resourcesFooterMenuItems: menuItems(where: { location: $resourcesFooterLocation }, first: 100) {
+      nodes { ...NavigationMenuItemFragment }
     }
   }
 `;
