@@ -70,7 +70,7 @@ export default function Footer({
 
       <GetStarted />
       <footer className={cx('footer')}>
-        <div className="container">
+        <div className={cx('container', styles.footerWrap)}>
           <div className={cx('footer-nav-contact-info')}>
 
 

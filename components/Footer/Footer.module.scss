@@ -5,6 +5,11 @@
   background: linear-gradient(135deg, var(--color-primary) 15%, #26825f);
   padding: 8rem 3rem 5rem;
   color: var(--color-white);
+  // max-width: 1200px;
+
+   .footerWrap {
+    max-width: 1200px; 
+  }
 
   a {
     color: var(--color-white);
