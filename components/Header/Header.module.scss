@@ -11,7 +11,10 @@
 
   &.scrolled {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    height: 76px;
+    @media (min-width: $breakpoint-small)  {
+      height: 76px;
+    }
+    height: 65px;
   }
 }
 
@@ -57,7 +60,10 @@
   color: #154734;
   font-family: "utopia-std-display", serif;
   letter-spacing: 0;
-  font-size: 3.2rem;
+  @media (min-width: $breakpoint-small) {
+    font-size: 3.2rem;
+  }
+  font-size: 2.25rem;
   display: inline-block;
   text-decoration-color: #BD8B13;
   transition: all 0.4s;

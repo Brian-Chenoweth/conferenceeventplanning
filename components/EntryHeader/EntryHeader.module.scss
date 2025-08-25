@@ -29,9 +29,12 @@
     font-weight: 700;
     font-size: 10rem;
     line-height: 10rem;
+    padding: 0 2rem;
+    // text-align: left;
     @media screen and (max-width: 925px) {
       font-size: 5rem;
       line-height: 5rem;
+      text-align: left;
     }
 }
 

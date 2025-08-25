@@ -31,9 +31,11 @@ export default function EntryHeader({ title, image, date, author, className }) {
             )}
 
           {isHome && (
+            // <div className={cx('container')}>
             <Heading className={cx('heading-home')} level="h1">
               Let&#8217;s Create Magic Together
             </Heading>
+            // </div>
           )}
 
             <FeaturedImage

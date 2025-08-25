@@ -464,7 +464,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  @media (min-width: $breakpoint-small) {
+    align-items: center;
+  }
+
+
   p {
     text-align: left;
     width: 100%;
@@ -926,13 +931,6 @@ h2.intro-text {
   }
 }
 
-
-
-.centered {
-  h2.wp-block-heading {
-    // margin-top: 6rem !important;
-  }
-}
 
 #contact-form-slot {
   width: 100%;
