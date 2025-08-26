@@ -12,7 +12,6 @@
 .container {
   max-width: var(--container);
   margin: 0 auto;
-//   padding: 0 1rem;
 }
 
 .layout {
@@ -42,7 +41,10 @@
   background: var(--card);
   color: var(--text);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-    padding: 10%;
+  padding: 10%;
+  @media (max-width: 767px) {
+    padding: 7.5%;
+  }
 
   @media (min-width: 1600px) {
     // width: 800px;
@@ -58,7 +60,11 @@
     letter-spacing: .165rem;
     font-size: 4.5rem;
     margin-bottom: .5rem;
-
+    @media (max-width: 767px)  {
+      font-size: 4rem;
+      margin-bottom: 2rem !important;
+      line-height: 5rem;
+    }
 }
 
 .bodyBottom {

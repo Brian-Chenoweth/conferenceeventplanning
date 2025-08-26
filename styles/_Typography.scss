@@ -49,6 +49,16 @@ h2 {
   font-family: abolition, sans-serif;
   font-style: normal;
   font-weight: 400;
+
+  font-size: 4.5rem;
+  margin-bottom: .5rem;
+  @media (max-width: 767px)  {
+    font-size: 4rem;
+    margin-bottom: 2rem !important;
+    line-height: 5rem;
+    text-align: left;
+  }
+
 }
 
 h3 {
@@ -90,6 +100,9 @@ p {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
   color: var(--color-black);
+  @media (max-width: 767px)  {
+    text-align: left;
+  }
 }
 
 // Links

@@ -2,7 +2,11 @@
 
 .entry-header {
   color: var(--color-white);
-  margin-top: 15.5rem;
+  // margin-top: 15.5rem;
+  margin-top: 13rem;
+  @media screen and (max-width: 767px) {
+    // margin-top: 13rem;
+  }
 }
 
 .EntryHeader_image {
@@ -35,6 +39,10 @@
       font-size: 5rem;
       line-height: 5rem;
       text-align: left;
+    }
+    @media screen and (max-width: 767px) {
+      height: 96%;
+      top: 49%;
     }
 }
 

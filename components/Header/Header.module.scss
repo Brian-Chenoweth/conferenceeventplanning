@@ -12,7 +12,7 @@
   &.scrolled {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     @media (min-width: $breakpoint-small)  {
-      height: 76px;
+      // height: 76px;
     }
     height: 65px;
   }
