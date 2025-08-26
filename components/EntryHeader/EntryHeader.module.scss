@@ -58,6 +58,10 @@
     background: rgba(0, 0, 0, 0.4);
     border-radius: 4px;
     height: 100%;
+    @media screen and (max-width: 767px) {
+      height: 96%;
+      top: 49%;
+    }
     display: flex;
     justify-content: center;
     align-items: center;

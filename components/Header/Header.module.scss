@@ -60,10 +60,14 @@
   color: #154734;
   font-family: "utopia-std-display", serif;
   letter-spacing: 0;
+   @media screen and (max-width: 904px) {
+    font-size: 1.75rem;
+   }
   @media (min-width: $breakpoint-small) {
-    font-size: 3.2rem;
+    // font-size: 3.2rem;
   }
-  font-size: 2.25rem;
+  // font-size: 2.15rem;
+  font-size: 3.2rem;
   display: inline-block;
   text-decoration-color: #BD8B13;
   transition: all 0.4s;

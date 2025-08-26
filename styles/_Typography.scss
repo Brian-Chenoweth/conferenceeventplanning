@@ -25,9 +25,21 @@ h1 {
   font-family: 'Source Sans Pro', Helvetica, Arial, Lucida, sans-serif;
   letter-spacing: .5rem;
   line-height: 9.4rem;
-  // text-align: left;
   font-weight: 700;
   margin-bottom: 0;
+  line-break: anywhere;
+  @media (max-width: 767px) {
+    text-align: left;
+    font-size: 6rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 5rem;
+    letter-spacing: .15rem;
+  }
+  @media (max-width: 535px) {
+    font-size: 4rem;
+    letter-spacing: .15rem;
+  }
 }
 
 h1.postTitle {

@@ -59,6 +59,10 @@
 .card {
   background-color: rgba(228, 227, 211, 0.5);
   padding: 5rem 2rem;
+
+      @media (max-width: 767px) {
+        padding: 2rem;
+      }
   .imageWrap, img {
     width: 125px;
     height: 125px;
