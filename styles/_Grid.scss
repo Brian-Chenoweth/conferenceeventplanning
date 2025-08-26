@@ -870,7 +870,9 @@ h2.intro-text {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      @media (min-width: $breakpoint-small) {
+        align-items: center;
+      }
       padding: 2rem !important;
     }
 
@@ -884,11 +886,15 @@ h2.intro-text {
       font-weight: 400;
       line-height: 4rem;
       color: #154734;
-      text-align: center;
+      @media (min-width: $breakpoint-small) {
+        text-align: center;
+      }
     }
 
     p {
-      text-align: center;
+      @media (min-width: $breakpoint-small) {
+        text-align: center;
+      }
     }
 
     figure {margin: 0;}
