@@ -95,6 +95,7 @@ export default function Testimonials({ testimonials = [] }) {
                           width={(img?.mediaDetails && img.mediaDetails.width) || 800}
                           height={(img?.mediaDetails && img.mediaDetails.height) || 600}
                           className={cx('image')}
+                          unoptimized
                         />
                       </div>
                     )}
