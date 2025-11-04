@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import Image from 'next/image';
+
 import styles from './FeaturedImage.module.scss';
 
 export default function FeaturedImage({
