@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Parallax } from 'react-parallax';
+
 import styles from './HomepageParallax.module.scss';
 
 const WIDTHS = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
