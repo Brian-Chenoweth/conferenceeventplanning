@@ -1,48 +1,40 @@
 import { gql } from '@apollo/client';
 import Image from 'next/image';
-
 import styles from './FeaturedImage.module.scss';
-/**
- * A page/post Featured Image component
- * @param {Props} props The props object.
- * @param {string} props.title The post/page title.
- * @param {MediaItem} props.image The post/page image.
- * @param {string|number} props.width The image width.
- * @param {string|number} props.height The image height.
- * @return {React.ReactElement} The FeaturedImage component.
- */
+
 export default function FeaturedImage({
-  className,
+  className = '',
   image,
   width,
   height,
+  isHero = false,
   ...props
 }) {
-  let src;
-  if (image?.sourceUrl instanceof Function) {
-    src = image?.sourceUrl();
-  } else {
-    src = image?.sourceUrl;
-  }
-  const { altText } = image || '';
+  const src =
+    typeof image?.sourceUrl === 'function' ? image.sourceUrl() : image?.sourceUrl;
+  const alt = image?.altText || '';
 
-  width = width ? width : image?.mediaDetails?.width;
-  height = height ? height : image?.mediaDetails?.height;
+  const w = Number(width ?? image?.mediaDetails?.width);
+  const h = Number(height ?? image?.mediaDetails?.height);
 
-  return src && width && height ? (
-    <figure className={[styles['featured-image'], className].join(' ')}>
+  if (!src || !w || !h) return null;
+
+  return (
+    <figure className={[styles['featured-image'], className].filter(Boolean).join(' ')}>
       <Image
         src={src}
-        width={width}
-        height={height}
-        alt={altText}
-        objectFit="cover"
-        layout="responsive"
-        unoptimized
+        alt={alt}
+        width={w}
+        height={h}
+        quality={80}
+        priority={isHero}
+        fetchPriority={isHero ? 'high' : undefined}
+        sizes="100vw"
+        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
         {...props}
       />
     </figure>
-  ) : null;
+  );
 }
 
 FeaturedImage.fragments = {
