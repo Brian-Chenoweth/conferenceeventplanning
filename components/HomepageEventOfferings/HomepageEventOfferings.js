@@ -47,7 +47,7 @@ export default function HomepageEventOfferings() {
               src="/home/outdoor-dinner-event-string-lights.png"
               alt="Guests seated at round tables under string lights during an outdoor dinner event in a garden setting."
               className={styles.image}
-              sizes="(min-width: 1200px) 474px, (min-width: 768px) 50vw, 100vw"
+              sizes="(min-width: 1280px) 474px, (min-width: 1024px) 420px, 50vw"
               {...CARD_IMG_PROPS}
             />
           </figure>
