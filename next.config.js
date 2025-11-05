@@ -9,9 +9,6 @@ module.exports = withFaust({
   images: {
     // ✅ Tell Next to serve AVIF/WebP when the browser accepts it
     formats: ['image/avif', 'image/webp'],
-
-    // (optional but good) cache longer from the optimizer
-    // minimumCacheTTL: 60 * 60 * 24, // 1 day
     minimumCacheTTL: 60 * 60 * 24,
     deviceSizes: [320, 355, 360, 420, 474, 480, 640, 750, 768, 828, 1024, 1080, 1200, 1280, 1536, 1920, 2048, 2560, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

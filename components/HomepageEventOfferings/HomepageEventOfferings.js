@@ -48,7 +48,11 @@ export default function HomepageEventOfferings() {
               alt="Guests seated at round tables under string lights during an outdoor dinner event in a garden setting."
               className={styles.image}
               sizes="(min-width: 1280px) 474px, (min-width: 1024px) 420px, 50vw"
-              {...CARD_IMG_PROPS}
+              quality={68}         
+              loading="lazy"
+              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+              width={778}
+              height={728}
             />
           </figure>
 

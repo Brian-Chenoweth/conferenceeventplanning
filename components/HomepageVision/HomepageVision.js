@@ -17,7 +17,10 @@ export default function HomepageVision() {
               height={1067}
               alt="Plated slices of wedding cake with pink and yellow frosting served at an outdoor reception, with a server arranging desserts in the background."
               className={styles.image}
-              priority
+              sizes="(min-width: 1280px) 582px, (min-width: 1024px) 520px, 100vw"
+              quality={72}
+              loading="lazy" 
+              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
             />
           </figure>
 
