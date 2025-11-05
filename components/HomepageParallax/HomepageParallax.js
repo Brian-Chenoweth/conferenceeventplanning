@@ -3,12 +3,19 @@ import { Parallax } from 'react-parallax';
 
 import styles from './HomepageParallax.module.scss';
 
-const WIDTHS = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+// Finer-grained widths so phones don't jump to 640/750 unnecessarily
+const WIDTHS = [320, 360, 480, 540, 600, 640, 750, 828, 1080, 1200, 1920];
 
-function nextSrcSet(path, q = 80) {
-  // Next optimizer endpoint – will negotiate AVIF/WebP based on Accept header
+function qualityFor(w) {
+  // leaner for mobile candidates; a touch higher for larger screens
+  return w <= 828 ? 60 : 72;
+}
+
+function nextSrcSet(path) {
   const enc = encodeURIComponent(path);
-  return WIDTHS.map((w) => `/_next/image?url=${enc}&w=${w}&q=${q} ${w}w`).join(', ');
+  return WIDTHS.map(
+    (w) => `/_next/image?url=${enc}&w=${w}&q=${qualityFor(w)} ${w}w`
+  ).join(', ');
 }
 
 export default function HomepageParallax() {
@@ -27,17 +34,21 @@ export default function HomepageParallax() {
 
   const path = '/home/elegant-dessert-table-setting-green-runner-macarons-flowers.jpg';
 
-  const srcSet = useMemo(() => nextSrcSet(path, 78), [path]);
+  const srcSet = useMemo(() => nextSrcSet(path), [path]);
   const sizes = '100vw';
+
+  // Small, optimized SSR fallback (prevents a large eager request before srcset parses)
+  const enc = encodeURIComponent(path);
+  const ssrFallback = `/_next/image?url=${enc}&w=640&q=60`;
 
   return (
     <div className={styles.para}>
       <Parallax
         blur={0}
         strength={700}
-        /** Fallback src (SSR + non-supporting browsers) */
-        bgImage={path}
-        /** ✅ Next-optimized responsive sources */
+        /* Fallback for SSR / non-srcset */
+        bgImage={ssrFallback}
+        /* Next-optimized responsive sources */
         bgImageSrcSet={srcSet}
         bgImageSizes={sizes}
         bgImageAlt="Dessert table"

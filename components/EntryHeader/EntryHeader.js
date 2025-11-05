@@ -34,7 +34,7 @@ export default function EntryHeader({ title, image, date, author, className }) {
             priority
             fetchPriority="high"
             sizes="100vw"
-            quality={80}
+            quality={72}
           />
         </div>
       )}
