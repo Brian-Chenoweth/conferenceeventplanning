@@ -19,7 +19,7 @@ export default function HomepageEventOfferings() {
         <div className="wp-block-column has-black-background-color has-background is-layout-flow">
           <figure className="wp-block-image size-large">
             <Image
-              src="/home/buffet-shrimp-skewers-catering.png"
+              src="/home/buffet-shrimp-skewers-catering.jpg"
               alt="Guests laughing and socializing around red tablecloth cocktail tables with bowls of strawberries at a networking event."
               className={styles.image}
               sizes="(min-width: 1200px) 355px, (min-width: 768px) 50vw, 100vw"
@@ -44,11 +44,11 @@ export default function HomepageEventOfferings() {
         <div className="wp-block-column has-black-background-color has-background is-layout-flow">
           <figure className="wp-block-image size-large">
             <Image
-              src="/home/outdoor-dinner-event-string-lights.png"
+              src="/home/outdoor-dinner-event-string-lights.jpg"
               alt="Guests seated at round tables under string lights during an outdoor dinner event in a garden setting."
               className={styles.image}
               sizes="(min-width: 1280px) 474px, (min-width: 1024px) 420px, 50vw"
-              quality={68}         
+              quality={62}         
               loading="lazy"
               style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
               width={778}
@@ -73,7 +73,7 @@ export default function HomepageEventOfferings() {
         <div className="wp-block-column has-black-background-color has-background is-layout-flow">
           <figure className="wp-block-image size-large">
             <Image
-              src="/home/students-cheering-poolside-event.png"
+              src="/home/students-cheering-poolside-event.jpg"
               alt="A group of students laughing and cheering poolside during a lively campus event under clear skies."
               className={styles.image}
               sizes="(min-width: 1200px) 355px, (min-width: 768px) 50vw, 100vw"
