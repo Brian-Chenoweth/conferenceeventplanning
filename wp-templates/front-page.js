@@ -45,7 +45,7 @@ export default function Component() {
 
   const mainBanner = {
     sourceUrl: '/static/banner.jpeg',
-    mediaDetails: { width: 1200, height: 600 },
+    mediaDetails: { width: 2560, height: 1280 }, 
     altText: 'Portfolio Banner',
   };
   return (
@@ -60,7 +60,7 @@ export default function Component() {
 
       <Main className={styles.home}>
 
-        <EntryHeader image={mainBanner} />
+        <EntryHeader image={mainBanner} isHero/>
 
         <div className="container">
 

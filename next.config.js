@@ -13,7 +13,7 @@ module.exports = withFaust({
     // (optional but good) cache longer from the optimizer
     // minimumCacheTTL: 60 * 60 * 24, // 1 day
     minimumCacheTTL: 60 * 60 * 24,
-    deviceSizes: [320, 355, 474, 480, 640, 768, 1024, 1280, 1536, 1920],
+    deviceSizes: [320, 355, 360, 474, 480, 640, 768, 1024, 1280, 1536, 1920, 2048, 2560, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       // your CEP/atlas media domain(s)

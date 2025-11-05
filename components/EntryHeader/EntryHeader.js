@@ -3,47 +3,39 @@ import { FeaturedImage, Heading, PostInfo } from 'components';
 import { useRouter } from 'next/router';
 
 import styles from './EntryHeader.module.scss';
+
 const cx = className.bind(styles);
-/**
- * A Page or Post entry header component
- * @param {Props} props The props object.
- * @param {string} props.title The post/page title.
- * @param {MediaItem} props.image The image node.
- * @param {string} props.date The post/page publish date.
- * @param {string} props.author The post/page author's name.
- * @param {string} props.className An optional className to be added to the EntryHeader.
- * @return {React.ReactElement} The EntryHeader component.
- */
+
 export default function EntryHeader({ title, image, date, author, className }) {
   const hasText = title || date || author;
-  const { pathname } = useRouter(); // Get the current path
-  const isHome = pathname === '/'; // Check if it's the home page
+  const { pathname } = useRouter();
+  const isHome = pathname === '/';
+
   return (
     <div className={cx(['entry-header', className])}>
       {image && (
         <div className={cx('image')}>
-          {/* <div className="container"> */}
           {hasText && (
-              <div className={cx('text')}>
-                {!!title && <Heading className={cx('title', 'container')}>{title}</Heading>}
-                <PostInfo className={cx('byline')} author={author} date={date} />
-              </div>
-            )}
+            <div className={cx('text')}>
+              {!!title && <Heading className={cx('title', 'container')}>{title}</Heading>}
+              <PostInfo className={cx('byline')} author={author} date={date} />
+            </div>
+          )}
 
           {isHome && (
-            // <div className={cx('container')}>
             <Heading className={cx('heading-home')} level="h1">
               Let&#8217;s Create Magic Together
             </Heading>
-            // </div>
           )}
 
-            <FeaturedImage
-              className={cx('featured-image')}
-              image={image}
-              priority
-            />
-          {/* </div> */}
+          <FeaturedImage
+            className={cx('featured-image')}
+            image={image}
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            quality={80}
+          />
         </div>
       )}
     </div>
