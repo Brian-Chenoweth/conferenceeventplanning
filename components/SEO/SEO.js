@@ -21,8 +21,8 @@ export default function SEO({ title, description, imageUrl, url }) {
       <Head>
         <link rel="stylesheet" href="https://use.typekit.net/umi1lem.css"/>
         <link rel="stylesheet" href="https://use.typekit.net/mfv5sni.css"/>
-        <link rel="stylesheet" href="https://use.typekit.net/qnm1phw.css"/>
-        <link rel="stylesheet" href="https://use.typekit.net/ato6pec.css"/>
+        {/* <link rel="stylesheet" href="https://use.typekit.net/qnm1phw.css"/> */}
+        {/* <link rel="stylesheet" href="https://use.typekit.net/ato6pec.css"/> */}
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
