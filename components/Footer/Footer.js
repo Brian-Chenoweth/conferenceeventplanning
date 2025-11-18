@@ -129,7 +129,6 @@ export default function Footer({
             &copy; {new Date().getFullYear()} {siteTitle ?? 'Cal Poly Partners'}
           </div>
         </div>
-        {console.log(menuItems, navOneMenuItems, navTwoMenuItems)}
       </footer>
     </>
   );
