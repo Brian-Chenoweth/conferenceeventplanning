@@ -23,14 +23,11 @@ export default function Page() {
     pageData?.generalSettings ?? {};
 
   const primaryMenu = pageData?.headerMenuItems?.nodes ?? [];
-  const footerMenu = pageData?.footerMenuItems?.nodes ?? [];
+  const quickLinks = pageData?.quickFooterMenuItems?.nodes ?? [];
+  const aboutLinks = pageData?.aboutFooterMenuItems?.nodes ?? [];
   const navOneMenuItems = pageData?.footerSecondaryMenuItems?.nodes ?? [];
-
-  // Prefer tertiary-by-location; fall back to tertiary-by-name if empty
-  const quickLinksMenuItems =
-    (pageData?.footerTertiaryMenuItems?.nodes?.length
-      ? pageData.footerTertiaryMenuItems.nodes
-      : pageData?.footerTertiaryByName?.menuItems?.nodes) ?? [];
+  const navTwoMenuItems = pageData?.footerTertiaryMenuItems?.nodes ?? [];
+  const resourcesMenuItems = pageData?.resourcesFooterMenuItems?.nodes ?? [];
 
   const pageTitle = siteTitle ? `404 — ${siteTitle}` : '404 — Page Not Found';
 
@@ -82,9 +79,11 @@ export default function Page() {
 
       <Footer
         title={siteTitle}
-        menuItems={footerMenu}
+        menuItems={quickLinks}
         navOneMenuItems={navOneMenuItems}
-        quickLinksMenuItems={quickLinksMenuItems}
+        navTwoMenuItems={navTwoMenuItems}
+        resourcesMenuItems={resourcesMenuItems}
+        aboutMenuItems={aboutLinks}
       />
     </>
   );
@@ -94,10 +93,11 @@ Page.variables = () => {
   return {
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
+    quickFooterLocation: MENUS.QUICK_FOOTER_LOCATION,
+    aboutFooterLocation: MENUS.ABOUT_FOOTER_LOCATION,
     footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
     footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
-    // Change ONLY if your Quick Links menu has a different name in WP Admin → Menus
-    footerTertiaryMenuName: 'Quick Links',
+    resourcesFooterLocation: MENUS.RESOURCES_FOOTER_LOCATION,
   };
 };
 
@@ -107,9 +107,11 @@ Page.query = gql`
   query Get404PageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
+    $quickFooterLocation: MenuLocationEnum
+    $aboutFooterLocation: MenuLocationEnum
     $footerSecondaryLocation: MenuLocationEnum
     $footerTertiaryLocation: MenuLocationEnum
-    $footerTertiaryMenuName: ID!
+    $resourcesFooterLocation: MenuLocationEnum
   ) {
     generalSettings {
       ...BlogInfoFragment
@@ -122,6 +124,24 @@ Page.query = gql`
     }
 
     footerMenuItems: menuItems(where: { location: $footerLocation } first: 100) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+
+    quickFooterMenuItems: menuItems(
+      where: { location: $quickFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+
+    aboutFooterMenuItems: menuItems(
+      where: { location: $aboutFooterLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
@@ -146,12 +166,12 @@ Page.query = gql`
       }
     }
 
-    # Tertiary by NAME (failsafe if location isn’t wired/assigned)
-    footerTertiaryByName: menu(id: $footerTertiaryMenuName, idType: NAME) {
-      menuItems {
-        nodes {
-          ...NavigationMenuItemFragment
-        }
+    resourcesFooterMenuItems: menuItems(
+      where: { location: $resourcesFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
       }
     }
   }
