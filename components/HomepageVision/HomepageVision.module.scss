@@ -84,16 +84,19 @@
   font-weight: 800;
   color: var(--ink);
   text-decoration: none;
-  transition: transform 160ms ease;
+  transition: color 160ms ease;
 
   &:hover {
-    transform: translateX(2px);
+    .arrow {
+      transform: translate(2px, -1px);
+    }
   }
 }
 
 .arrow {
   display: inline-block;
   transform: translateY(-1px);
+  transition: transform 160ms ease;
 }
 
 
