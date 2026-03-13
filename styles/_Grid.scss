@@ -639,11 +639,38 @@ margin-bottom: 0 !important;
     color: var(--color-primary);
     font-size: 2rem;
     font-weight: 600;
-    padding:0;
+    padding: 0;
     width: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     @media screen and (max-width: 767px) {
      font-size: 1.5rem;
     }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::marker {
+    content: "";
+  }
+
+  summary::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0;
+    height: 0;
+    border-top: 0.32em solid transparent;
+    border-bottom: 0.32em solid transparent;
+    border-left: 0.5em solid currentColor;
+    transition: transform .2s ease;
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
   }
 
   p {
