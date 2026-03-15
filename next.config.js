@@ -36,7 +36,7 @@ module.exports = withFaust({
     return [
       {
         source:
-          '/:path*{\\.(?:jpg|jpeg|png|webp|avif|gif|svg|ico|js|css|woff|woff2)$}',
+          '/:path*\\.(jpg|jpeg|png|webp|avif|gif|svg|ico|js|css|woff|woff2)',
         headers: [
           {
             key: 'Cache-Control',
