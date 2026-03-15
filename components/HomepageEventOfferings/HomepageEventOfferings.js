@@ -14,9 +14,13 @@ const CARD_IMG_PROPS = {
 export default function HomepageEventOfferings() {
   return (
     <div className={styles.cta}>
-      <div className="wp-block-columns alignwide three-cards is-layout-flex">
+      <div
+        className={`wp-block-columns alignwide three-cards is-layout-flex ${styles.grid}`}
+      >
         {/* Card 1 (side column ~355px on desktop) */}
-        <div className="wp-block-column has-black-background-color has-background is-layout-flow">
+        <div
+          className={`wp-block-column has-black-background-color has-background is-layout-flow ${styles.card}`}
+        >
           <figure className="wp-block-image size-large">
             <Image
               src="/home/buffet-shrimp-skewers-catering.jpg"
@@ -41,7 +45,9 @@ export default function HomepageEventOfferings() {
         </div>
 
         {/* Card 2 (middle column ~474px on desktop) */}
-        <div className="wp-block-column has-black-background-color has-background is-layout-flow">
+        <div
+          className={`wp-block-column has-black-background-color has-background is-layout-flow ${styles.card} ${styles.featuredCard}`}
+        >
           <figure className="wp-block-image size-large">
             <Image
               src="/home/outdoor-dinner-event-string-lights.jpg"
@@ -70,7 +76,9 @@ export default function HomepageEventOfferings() {
         </div>
 
         {/* Card 3 (side column ~355px on desktop) */}
-        <div className="wp-block-column has-black-background-color has-background is-layout-flow">
+        <div
+          className={`wp-block-column has-black-background-color has-background is-layout-flow ${styles.card} ${styles.trailingCard}`}
+        >
           <figure className="wp-block-image size-large">
             <Image
               src="/home/students-cheering-poolside-event.jpg"

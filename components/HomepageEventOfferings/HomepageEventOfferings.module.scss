@@ -1,1 +1,65 @@
 @import 'styles/Variables';
+
+.grid {
+  @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 2.4rem !important;
+    align-items: stretch;
+  }
+
+  @media (min-width: 1101px) {
+    gap: 0 !important;
+  }
+}
+
+.card {
+  min-width: 0;
+
+  @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+    height: auto !important;
+    margin-top: 0 !important;
+  }
+
+  :global(figure) {
+    margin: 0;
+  }
+
+  :global(.wp-block-group) {
+    @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+      padding: 2.6rem 2.2rem !important;
+    }
+  }
+
+  h3 {
+    @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+      font-size: 2.8rem !important;
+      line-height: 1.15;
+      text-wrap: balance;
+    }
+  }
+
+  p {
+    @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+      text-wrap: pretty;
+    }
+  }
+}
+
+.featuredCard {
+  @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+    grid-column: auto;
+  }
+}
+
+.trailingCard {
+  @media (min-width: $breakpoint-small) and (max-width: 1100px) {
+    grid-column: 1 / -1;
+    max-width: min(46rem, 100%);
+    width: 100%;
+    justify-self: center;
+  }
+}
+
+.link {
+  text-wrap: balance;
+}
