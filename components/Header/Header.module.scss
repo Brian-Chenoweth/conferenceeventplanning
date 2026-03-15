@@ -201,7 +201,8 @@
   :global(.hasChildren > .menuLinkWrap > .menuLink::after) {
     content: '\25BE';
     margin-left: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: #bd8b13;
 
     @media (max-width: 767px) {
@@ -275,10 +276,10 @@
 
     :global(.menu-item > .subMenu) {
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: 100%;
       right: 0;
       min-width: 24rem;
-      padding: 0.6rem 0;
+      padding: 0.75rem 0 0;
       background-color: #e4ece8;
       border-top: 3px solid var(--color-primary);
       box-shadow: 0 20px 40px rgba(15, 39, 28, 0.12);
@@ -292,8 +293,10 @@
 
     :global(.menu-item > .subMenu .menuLink) {
       display: block;
+      width: 100%;
       padding: 1rem 1.5rem;
       white-space: nowrap;
+      box-sizing: border-box;
     }
 
     :global(.menu-item > .subMenu .menuLink:hover),
@@ -303,7 +306,8 @@
 
     :global(.menu-item > .subMenu .menu-item > .subMenu) {
       top: 0;
-      right: calc(100% + 0.6rem);
+      right: 100%;
+      padding-top: 0;
     }
 
     :global(.submenuToggle) {
