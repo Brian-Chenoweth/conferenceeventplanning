@@ -1,12 +1,26 @@
 import { gql } from '@apollo/client';
 import Link from 'next/link';
+import { forwardRef, useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
 
-export default function NavigationMenu({ menuItems, className, children }) {
+const NavigationMenu = forwardRef(function NavigationMenu(
+  {
+    menuItems,
+    className,
+    children,
+    id,
+    isMobile = false,
+    onNavigate,
+    mobileHeader,
+  },
+  ref
+) {
+  const [openItems, setOpenItems] = useState({});
+
   if (!menuItems) {
     return null;
   }
 
-  // Convert flat list to tree structure
   const buildMenuTree = (items) => {
     const map = {};
     const roots = [];
@@ -26,16 +40,74 @@ export default function NavigationMenu({ menuItems, className, children }) {
     return roots;
   };
 
-  const renderMenuItems = (items) => {
+  const toggleItem = (itemId) => {
+    setOpenItems((current) => ({
+      ...current,
+      [itemId]: !current[itemId],
+    }));
+  };
+
+  const renderMenuItems = (items, depth = 0) => {
     return items.map((item) => {
       const hasChildren = item.children?.length > 0;
+      const isOpen = !!openItems[item.id];
+      const submenuId = `submenu-${item.id}`;
+      const useMobileToggle = isMobile && hasChildren;
+
       return (
         <li
           key={item.id ?? ''}
-          className={hasChildren ? 'hasChildren' : undefined}
+          className={[
+            'menu-item',
+            hasChildren ? 'hasChildren' : '',
+            isOpen ? 'submenuOpen' : '',
+            depth > 0 ? 'isNested' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
         >
-          <Link href={item.path ?? ''}>{item.label ?? ''}</Link>
-          {hasChildren && <ul>{renderMenuItems(item.children)}</ul>}
+          <div className="menuLinkWrap">
+            {useMobileToggle ? (
+              <button
+                type="button"
+                className="menuLink menuToggleLink"
+                onClick={() => toggleItem(item.id)}
+                aria-expanded={isOpen}
+                aria-controls={submenuId}
+              >
+                {item.label ?? ''}
+              </button>
+            ) : (
+              <Link legacyBehavior href={item.path ?? ''} passHref>
+                <a className="menuLink" onClick={() => onNavigate?.()}>
+                  {item.label ?? ''}
+                </a>
+              </Link>
+            )}
+            {useMobileToggle ? (
+              <button
+                type="button"
+                className="submenuToggle"
+                aria-expanded={isOpen}
+                aria-controls={submenuId}
+                aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${
+                  item.label ?? 'submenu'
+                }`}
+                onClick={() => toggleItem(item.id)}
+              >
+                <FaChevronDown />
+              </button>
+            ) : null}
+          </div>
+          {hasChildren ? (
+            <ul
+              id={submenuId}
+              className="subMenu"
+              hidden={isMobile ? !isOpen : undefined}
+            >
+              {renderMenuItems(item.children, depth + 1)}
+            </ul>
+          ) : null}
         </li>
       );
     });
@@ -45,17 +117,22 @@ export default function NavigationMenu({ menuItems, className, children }) {
 
   return (
     <nav
+      id={id}
+      ref={ref}
       className={className}
       role="navigation"
       aria-label={`${menuItems[0]?.menu?.node?.name ?? 'Main'} menu`}
     >
+      {isMobile && mobileHeader ? mobileHeader : null}
       <ul className="menu">
         {renderMenuItems(menuTree)}
         {children}
       </ul>
     </nav>
   );
-}
+});
+
+export default NavigationMenu;
 
 NavigationMenu.fragments = {
   entry: gql`

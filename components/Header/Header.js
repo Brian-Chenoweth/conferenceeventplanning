@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import { FaBars, FaSearch } from 'react-icons/fa';
+import { FaBars, FaSearch, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ let cx = classNames.bind(styles);
 export default function Header({ className, menuItems }) {
   const [isNavShown, setIsNavShown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const menuRef = useRef(null);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   // Classes with scroll-aware styles
   const headerClasses = cx('header', className, { scrolled: isScrolled });
@@ -26,7 +26,9 @@ export default function Header({ className, menuItems }) {
     isNavShown ? cx('show') : undefined
   );
 
-  // Handle scroll detection
+  const closeNavigation = () => setIsNavShown(false);
+  const toggleNavigation = () => setIsNavShown((current) => !current);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -36,44 +38,61 @@ export default function Header({ className, menuItems }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle submenu overflow flipping
   useEffect(() => {
-    const items = menuRef.current?.querySelectorAll('li') || [];
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const updateViewport = (event) => {
+      const matches =
+        typeof event?.matches === 'boolean'
+          ? event.matches
+          : mediaQuery.matches;
+      setIsMobileView(matches);
 
-    items.forEach((li) => {
-      const submenu = li.querySelector('ul ul'); // 3rd-level menu
-      if (!submenu) return;
+      if (!matches) {
+        setIsNavShown(false);
+      }
+    };
 
-      const handleEnter = () => {
-        const rect = submenu.getBoundingClientRect();
-        const overflowsRight = rect.right > window.innerWidth;
+    updateViewport();
+    mediaQuery.addEventListener('change', updateViewport);
 
-        if (overflowsRight) {
-          submenu.style.left = 'auto';
-          submenu.style.right = '100%';
-        } else {
-          submenu.style.left = '100%';
-          submenu.style.right = 'auto';
-        }
-      };
-
-      li.addEventListener('mouseenter', handleEnter);
-      li.addEventListener('focusin', handleEnter);
-
-      // cleanup
-      return () => {
-        li.removeEventListener('mouseenter', handleEnter);
-        li.removeEventListener('focusin', handleEnter);
-      };
-    });
+    return () => mediaQuery.removeEventListener('change', updateViewport);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileView) {
+      document.body.style.overflow = '';
+      return undefined;
+    }
+
+    document.body.style.overflow = isNavShown ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileView, isNavShown]);
+
+  useEffect(() => {
+    if (!isNavShown) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeNavigation();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isNavShown]);
 
   return (
     <header className={headerClasses}>
       <div className={logoWrapClasses}>
         <div className="container">
           <div className={cx('logo')}>
-            <Link legacyBehavior href="/">
+            <Link legacyBehavior href="/" passHref>
               <a title="Home">
                 <Image
                   src="/logo.png"
@@ -92,29 +111,43 @@ export default function Header({ className, menuItems }) {
 
       <div className={headerContentClasses}>
         <div className={cx('bar')}>
-
-          <Link href="/" className={cx('titleName')}>Conference and Event Planning</Link>
+          <Link legacyBehavior href="/" passHref>
+            <a className={cx('titleName')}>Conference and Event Planning</a>
+          </Link>
 
           <button
             type="button"
             className={cx('nav-toggle')}
-            onClick={() => setIsNavShown(!isNavShown)}
-            aria-label="Toggle navigation"
-            aria-controls={cx('primary-navigation')}
+            onClick={toggleNavigation}
+            aria-label={isNavShown ? 'Close navigation' : 'Open navigation'}
+            aria-controls="primary-navigation"
             aria-expanded={isNavShown}
           >
-            <FaBars />
+            {isNavShown ? <FaTimes /> : <FaBars />}
           </button>
 
           <NavigationMenu
-            id={cx('primary-navigation')}
+            id="primary-navigation"
             className={navClasses}
             menuItems={menuItems}
-            ref={menuRef}
+            isMobile={isMobileView}
+            onNavigate={closeNavigation}
+            mobileHeader={
+              <div className={cx('mobile-menu-header')}>
+                <button
+                  type="button"
+                  className={cx('mobile-menu-close')}
+                  onClick={closeNavigation}
+                  aria-label="Close navigation"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+            }
           >
-            <li>
-              <Link legacyBehavior href="/search">
-                <a>
+            <li className="menu-item menu-item-search">
+              <Link legacyBehavior href="/search" passHref>
+                <a className="menuLink" onClick={closeNavigation}>
                   <FaSearch title="Search" role="img" />
                 </a>
               </Link>
