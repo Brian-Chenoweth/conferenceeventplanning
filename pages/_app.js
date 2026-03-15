@@ -11,6 +11,8 @@ const GA_TRACKING_ID = 'G-121M5PNKJP';
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const shouldLoadTeamLightbox =
+    router.asPath === '/plan/team/' || router.asPath.startsWith('/plan/team/');
 
   // -------------------------------
   // Google Analytics route tracking
@@ -169,7 +171,12 @@ export default function MyApp({ Component, pageProps }) {
           `,
         }}
       />
-      <script src="/team-lightbox.js" defer />
+      {shouldLoadTeamLightbox ? (
+        <Script
+          src="/team-lightbox.js"
+          strategy="lazyOnload"
+        />
+      ) : null}
 
       <ThemeStyles />
       <FaustProvider pageProps={pageProps}>
