@@ -12,7 +12,7 @@ import {
   SEO,
   TaxonomyTerms,
 } from 'components';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
 export default function Component(props) {
@@ -26,6 +26,16 @@ export default function Component(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage, date, author } = props.data.post;
+  const description = buildMetaDescription({
+    title,
+    content,
+    fallback: siteDescription,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content,
+    seedKeywords: ['blog', 'conference planning', 'event planning'],
+  });
 
   return (
     <>
@@ -35,7 +45,8 @@ export default function Component(props) {
           title,
           props?.data?.generalSettings?.title
         )}
-        description={siteDescription}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
       <Header
@@ -59,11 +70,7 @@ export default function Component(props) {
           </div>
         </>
       </Main>
-      <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}/>
+      <Footer title={siteTitle} menuItems={footerMenu} />
     </>
   );
 }
@@ -108,7 +115,10 @@ Component.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }

@@ -1,16 +1,11 @@
 import * as MENUS from 'constants/menus';
 
 import { gql, useQuery } from '@apollo/client';
-import {
-  Button,
-  Footer,
-  Header,
-  Main,
-  NavigationMenu,
-  SEO,
-} from 'components';
+import Link from 'next/link';
+import { Button, Footer, Header, Main, NavigationMenu, SEO } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import styles from 'styles/pages/_404.module.scss';
+import { buildKeywordString } from 'utilities';
 
 export default function Page() {
   const { data: pageData, loading: pageLoading } = useQuery(Page.query, {
@@ -30,16 +25,18 @@ export default function Page() {
   const resourcesMenuItems = pageData?.resourcesFooterMenuItems?.nodes ?? [];
 
   const pageTitle = siteTitle ? `404 — ${siteTitle}` : '404 — Page Not Found';
+  const description =
+    siteDescription ||
+    'The page you are looking for could not be found. Try heading home or searching the site.';
+  const keywords = buildKeywordString({
+    title: '404 page not found',
+    content: description,
+    seedKeywords: ['404', 'page not found', 'site navigation'],
+  });
 
   return (
     <>
-      <SEO
-        title={pageTitle}
-        description={
-          siteDescription ||
-          'The page you are looking for could not be found. Try heading home or searching the site.'
-        }
-      />
+      <SEO title={pageTitle} description={description} keywords={keywords} />
 
       <Header
         title={siteTitle}
@@ -69,7 +66,7 @@ export default function Page() {
                 </div>
                 <p className={styles.hint}>
                   If you followed a link, let us know and we will fix it.{' '}
-                  <a href="/contact/">Contact us.</a>
+                  <Link href="/contact/">Contact us.</Link>
                 </p>
               </div>
             </div>
@@ -117,13 +114,19 @@ Page.query = gql`
       ...BlogInfoFragment
     }
 
-    headerMenuItems: menuItems(where: { location: $headerLocation } first: 100) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
 
-    footerMenuItems: menuItems(where: { location: $footerLocation } first: 100) {
+    footerMenuItems: menuItems(
+      where: { location: $footerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }

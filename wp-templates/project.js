@@ -13,6 +13,7 @@ import {
   SEO,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
+import { buildKeywordString, buildMetaDescription } from 'utilities';
 
 export default function Component(props) {
   // Loading state for previews
@@ -24,10 +25,22 @@ export default function Component(props) {
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { featuredImage } = props.data.project;
   const { title, summary, contentArea } = props.data.project.projectFields;
+  const description = buildMetaDescription({
+    title,
+    content: `${summary ?? ''} ${contentArea ?? ''}`,
+    fallback: `Explore the ${title} project from ${siteTitle}.`,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content: `${summary ?? ''} ${contentArea ?? ''}`,
+    seedKeywords: ['project', 'conference planning', 'event planning'],
+  });
   return (
     <>
       <SEO
         title={`${title} - ${props?.data?.generalSettings?.title}`}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
 
@@ -45,11 +58,7 @@ export default function Component(props) {
         </div>
       </Main>
 
-      <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}/>
+      <Footer title={siteTitle} menuItems={footerMenu} />
     </>
   );
 }
@@ -75,7 +84,10 @@ Component.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }

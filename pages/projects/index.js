@@ -14,7 +14,7 @@ import {
   NavigationMenu,
 } from 'components';
 import { getNextStaticProps } from '@faustwp/core';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
 
@@ -31,9 +31,24 @@ export default function Page() {
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
   const projectList = data?.projects?.nodes ?? [];
+  const description =
+    'Browse conference and event planning projects, activations, and guest experience work.';
+  const keywords = buildKeywordString({
+    title: 'Projects',
+    content: description,
+    seedKeywords: [
+      'event planning projects',
+      'conference projects',
+      'event portfolio',
+    ],
+  });
   return (
     <>
-      <SEO title={pageTitle(data?.generalSettings, 'Projects')} />
+      <SEO
+        title={pageTitle(data?.generalSettings, 'Projects')}
+        description={description}
+        keywords={keywords}
+      />
 
       <Header menuItems={primaryMenu} />
 
@@ -52,10 +67,11 @@ export default function Page() {
       </Main>
 
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}/>
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+        quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
+      />
     </>
   );
 }
@@ -85,7 +101,10 @@ Page.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }

@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
+import { buildKeywordString } from 'utilities';
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -67,10 +68,26 @@ export default function Page() {
         const firstSegment = node.uri.split('/').filter(Boolean)[0];
         return firstSegment?.toLowerCase() !== 'testimonial';
       }) ?? [];
+  const searchDescription = searchQuery
+    ? `Search results for "${searchQuery}" across conference event planning content.`
+    : 'Search the site for conference planning services, projects, and resources.';
+  const searchKeywords = buildKeywordString({
+    title: 'Search',
+    content: `${searchDescription} ${searchQuery}`,
+    seedKeywords: ['site search', 'conference event planning'],
+  });
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={
+          searchQuery
+            ? `${searchQuery} Search | ${siteTitle}`
+            : `Search | ${siteTitle}`
+        }
+        description={searchDescription || siteDescription}
+        keywords={searchKeywords}
+      />
 
       <Header
         title={siteTitle}

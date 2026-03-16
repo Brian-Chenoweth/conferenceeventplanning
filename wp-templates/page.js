@@ -1,8 +1,11 @@
 import * as MENUS from 'constants/menus';
 
 import { gql } from '@apollo/client';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 
 import {
   Header,
@@ -15,12 +18,10 @@ import {
   SEO,
 } from '../components';
 
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-
 // Client-only form to avoid SSR/client mismatch
-const ContactForm = dynamic(() => import('components/ContactForm'), { ssr: false });
+const ContactForm = dynamic(() => import('components/ContactForm'), {
+  ssr: false,
+});
 
 const TOKEN = '<!-- FORMSPREE_CONTACT -->';
 const SLOT_HTML = '<div id="contact-form-slot"></div>';
@@ -45,13 +46,23 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
 
-  const quickLinks   = props?.data?.quickFooterMenuItems?.nodes ?? [];
-  const aboutLinks   = props?.data?.aboutFooterMenuItems?.nodes ?? [];
-  const navOne       = props?.data?.footerSecondaryMenuItems?.nodes ?? [];
-  const navTwo       = props?.data?.footerTertiaryMenuItems?.nodes ?? [];
-  const resources    = props?.data?.resourcesFooterMenuItems?.nodes ?? [];
+  const quickLinks = props?.data?.quickFooterMenuItems?.nodes ?? [];
+  const aboutLinks = props?.data?.aboutFooterMenuItems?.nodes ?? [];
+  const navOne = props?.data?.footerSecondaryMenuItems?.nodes ?? [];
+  const navTwo = props?.data?.footerTertiaryMenuItems?.nodes ?? [];
+  const resources = props?.data?.resourcesFooterMenuItems?.nodes ?? [];
 
   const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
+  const description = buildMetaDescription({
+    title,
+    content,
+    fallback: siteDescription,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content,
+    seedKeywords: ['conference planning', 'event planning'],
+  });
 
   // Replace the marker with a stable placeholder DIV for SSR
   const htmlWithSlot = (content ?? '').split(TOKEN).join(SLOT_HTML);
@@ -64,7 +75,8 @@ export default function Component(props) {
           title,
           props?.data?.generalSettings?.title
         )}
-        description={siteDescription}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
       <Header
@@ -85,10 +97,10 @@ export default function Component(props) {
       </Main>
       <Footer
         title={siteTitle}
-        menuItems={quickLinks}                // left column: Quick Footer
-        navOneMenuItems={navOne}              // middle: Footer Secondary
-        navTwoMenuItems={navTwo}              // right: Footer Tertiary
-        resourcesMenuItems={resources}        // new Resources block
+        menuItems={quickLinks} // left column: Quick Footer
+        navOneMenuItems={navOne} // middle: Footer Secondary
+        navTwoMenuItems={navTwo} // right: Footer Tertiary
+        resourcesMenuItems={resources} // new Resources block
         aboutMenuItems={aboutLinks}
       />
     </>
@@ -132,26 +144,54 @@ Component.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
 
-    quickFooterMenuItems: menuItems(where: { location: $quickFooterLocation }, first: 100) {
-      nodes { ...NavigationMenuItemFragment }
+    quickFooterMenuItems: menuItems(
+      where: { location: $quickFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
     }
-    aboutFooterMenuItems: menuItems(where: { location: $aboutFooterLocation }, first: 100) {
-      nodes { ...NavigationMenuItemFragment }
+    aboutFooterMenuItems: menuItems(
+      where: { location: $aboutFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
     }
-    footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }, first: 100) {
-      nodes { ...NavigationMenuItemFragment }
+    footerSecondaryMenuItems: menuItems(
+      where: { location: $footerSecondaryLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
     }
-    footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }, first: 100) {
-      nodes { ...NavigationMenuItemFragment }
+    footerTertiaryMenuItems: menuItems(
+      where: { location: $footerTertiaryLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
     }
-    resourcesFooterMenuItems: menuItems(where: { location: $resourcesFooterLocation }, first: 100) {
-      nodes { ...NavigationMenuItemFragment }
+    resourcesFooterMenuItems: menuItems(
+      where: { location: $resourcesFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
     }
   }
 `;

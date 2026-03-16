@@ -1,14 +1,10 @@
 import * as MENUS from 'constants/menus';
 
 import { useQuery, gql } from '@apollo/client';
-import { FaArrowRight } from 'react-icons/fa';
 import styles from 'styles/pages/_Home.module.scss';
 import {
   EntryHeader,
   Main,
-  Button,
-  Heading,
-  CTA,
   NavigationMenu,
   SEO,
   Header,
@@ -23,7 +19,7 @@ import {
   HomepageEventHighlights,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-
+import { buildKeywordString } from 'utilities';
 
 export default function Component() {
   const { data, loading } = useQuery(Component.query, {
@@ -35,22 +31,38 @@ export default function Component() {
 
   const { title: siteTitle, description: siteDescription } =
     data?.generalSettings;
-    const primaryMenu = data?.headerMenuItems?.nodes ?? [];
-    const footerMenu = data?.footerMenuItems?.nodes ?? [];
-  const quickLinks   = data?.quickFooterMenuItems?.nodes ?? [];
-  const aboutLinks   = data?.aboutFooterMenuItems?.nodes ?? [];
-  const navOne       = data?.footerSecondaryMenuItems?.nodes ?? [];
-  const navTwo       = data?.footerTertiaryMenuItems?.nodes ?? [];
-  const resources    = data?.resourcesFooterMenuItems?.nodes ?? [];
+  const primaryMenu = data?.headerMenuItems?.nodes ?? [];
+  const quickLinks = data?.quickFooterMenuItems?.nodes ?? [];
+  const aboutLinks = data?.aboutFooterMenuItems?.nodes ?? [];
+  const navOne = data?.footerSecondaryMenuItems?.nodes ?? [];
+  const navTwo = data?.footerTertiaryMenuItems?.nodes ?? [];
+  const resources = data?.resourcesFooterMenuItems?.nodes ?? [];
 
   const mainBanner = {
     sourceUrl: '/static/banner.jpeg',
-    mediaDetails: { width: 2560, height: 1280 }, 
+    mediaDetails: { width: 2560, height: 1280 },
     altText: 'Portfolio Banner',
   };
+  const homeDescription =
+    'Conference Event Planning delivers conference, meeting, dining, housing, staffing, and on-site event coordination for memorable guest experiences.';
+  const homeKeywords = buildKeywordString({
+    title: siteTitle,
+    content: `${homeDescription} Discover event offerings, testimonials, and planning support for conferences, campus events, and destination experiences.`,
+    seedKeywords: [
+      'conference event planning',
+      'event planning',
+      'conference management',
+      'on-site event staffing',
+      'event coordination',
+    ],
+  });
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={siteTitle}
+        description={homeDescription || siteDescription}
+        keywords={homeKeywords}
+      />
 
       <Header
         title={siteTitle}
@@ -59,21 +71,24 @@ export default function Component() {
       />
 
       <Main className={styles.home}>
-
-        <EntryHeader image={mainBanner} isHero/>
+        <EntryHeader image={mainBanner} isHero />
 
         <div className="container">
-
           <HomepageIntro />
 
           <HomepageVision />
 
           <HomepageATeam />
 
-
           <div className={styles.testimonials}>
             <h2 className="wp-block-heading">Discover Our Event Offerings</h2>
-            <p>Let us take care of it. Planning a week-long conference or afternoon event is not everyone&apos;s forte. That is where we shine. And oh, do we shine. From housing to dining and facility coordination to onsite staffing, we can take it from concept to creation.</p>
+            <p>
+              Let us take care of it. Planning a week-long conference or
+              afternoon event is not everyone&apos;s forte. That is where we
+              shine. And oh, do we shine. From housing to dining and facility
+              coordination to onsite staffing, we can take it from concept to
+              creation.
+            </p>
             <HomepageEventOfferings />
           </div>
 
@@ -85,15 +100,15 @@ export default function Component() {
 
           <div className={styles.testimonials}>
             <h2>Hear what our clients rave about</h2>
-            <p>Read what our satisfied clients have to say about their amazing experiences with us.</p>
+            <p>
+              Read what our satisfied clients have to say about their amazing
+              experiences with us.
+            </p>
             <Testimonials testimonials={data?.testimonials?.nodes} />
           </div>
-
-
         </div>
-
       </Main>
-{/* 
+      {/* 
       <Footer
         title={siteTitle}
         menuItems={footerMenu}
@@ -103,14 +118,12 @@ export default function Component() {
 
       <Footer
         title={siteTitle}
-        menuItems={quickLinks}                // left column: Quick Footer
-        navOneMenuItems={navOne}              // middle: Footer Secondary
-        navTwoMenuItems={navTwo}              // right: Footer Tertiary
-        resourcesMenuItems={resources} 
-        aboutMenuItems={aboutLinks}        // new Resources block
+        menuItems={quickLinks} // left column: Quick Footer
+        navOneMenuItems={navOne} // middle: Footer Secondary
+        navTwoMenuItems={navTwo} // right: Footer Tertiary
+        resourcesMenuItems={resources}
+        aboutMenuItems={aboutLinks} // new Resources block
       />
-
-
     </>
   );
 }
@@ -127,7 +140,7 @@ export default function Component() {
 Component.variables = () => ({
   headerLocation: MENUS.PRIMARY_LOCATION,
   // was FOOTER_LOCATION — stop using it on the homepage
-   footerLocation: MENUS.FOOTER_LOCATION,
+  footerLocation: MENUS.FOOTER_LOCATION,
   quickFooterLocation: MENUS.QUICK_FOOTER_LOCATION,
   aboutFooterLocation: MENUS.ABOUT_FOOTER_LOCATION,
   footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
@@ -140,39 +153,69 @@ Component.query = gql`
   ${NavigationMenu.fragments.entry}
   ${Testimonials.fragments.entry}
   query GetPageData(
-  $headerLocation: MenuLocationEnum
-  $quickFooterLocation: MenuLocationEnum
-  $aboutFooterLocation: MenuLocationEnum
-  $footerSecondaryLocation: MenuLocationEnum
-  $footerTertiaryLocation: MenuLocationEnum
-  $resourcesFooterLocation: MenuLocationEnum
+    $headerLocation: MenuLocationEnum
+    $quickFooterLocation: MenuLocationEnum
+    $aboutFooterLocation: MenuLocationEnum
+    $footerSecondaryLocation: MenuLocationEnum
+    $footerTertiaryLocation: MenuLocationEnum
+    $resourcesFooterLocation: MenuLocationEnum
   ) {
     testimonials {
       nodes {
         ...TestimonialsFragment
       }
     }
-    generalSettings { ...BlogInfoFragment }
-  headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-  }
+    generalSettings {
+      ...BlogInfoFragment
+    }
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
 
-  quickFooterMenuItems: menuItems(where: { location: $quickFooterLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-    
-  }
-  aboutFooterMenuItems: menuItems(where: { location: $aboutFooterLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-    
-  }
-  footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-  }
-  footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-  }
-  resourcesFooterMenuItems: menuItems(where: { location: $resourcesFooterLocation }, first: 100) {
-    nodes { ...NavigationMenuItemFragment }
-  }
+    quickFooterMenuItems: menuItems(
+      where: { location: $quickFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    aboutFooterMenuItems: menuItems(
+      where: { location: $aboutFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    footerSecondaryMenuItems: menuItems(
+      where: { location: $footerSecondaryLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    footerTertiaryMenuItems: menuItems(
+      where: { location: $footerTertiaryLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    resourcesFooterMenuItems: menuItems(
+      where: { location: $resourcesFooterLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
   }
 `;
