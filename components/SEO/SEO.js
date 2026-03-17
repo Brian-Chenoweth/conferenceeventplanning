@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 
 /**
  * Provide SEO related meta tags to a page.
@@ -17,24 +18,26 @@ export default function SEO({ title, description, keywords, imageUrl, url }) {
     return null;
   }
 
+  const typekitHref = 'https://use.typekit.net/mfv5sni.css';
+  const googleFontsHref =
+    'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;500;600;700&display=swap';
+
   return (
     <>
       <Head>
-        {/* <link rel="stylesheet" href="https://use.typekit.net/umi1lem.css"/> */}
-        <link rel="stylesheet" href="https://use.typekit.net/mfv5sni.css" />
-        {/* <link rel="stylesheet" href="https://use.typekit.net/qnm1phw.css"/> */}
-        {/* <link rel="stylesheet" href="https://use.typekit.net/ato6pec.css"/> */}
+        {/* Load external font stylesheets without blocking initial render. */}
+        <link rel="preconnect" href="https://use.typekit.net" />
+        <link rel="preconnect" href="https://p.typekit.net" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/> */}
+        <noscript>
+          <link rel="stylesheet" href={typekitHref} />
+          <link rel="stylesheet" href={googleFontsHref} />
+        </noscript>
 
         <meta property="og:type" content="website" />
         <meta property="twitter:card" content="summary_large_image" />
@@ -72,6 +75,29 @@ export default function SEO({ title, description, keywords, imageUrl, url }) {
           </>
         )}
       </Head>
+      <Script
+        id="defer-external-font-styles"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              var head = document.head;
+              if (!head) return;
+              var hrefs = ${JSON.stringify([typekitHref, googleFontsHref])};
+
+              hrefs.forEach(function(href) {
+                if (head.querySelector('link[data-font-href="' + href + '"]')) return;
+
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = href;
+                link.setAttribute('data-font-href', href);
+                head.appendChild(link);
+              });
+            })();
+          `,
+        }}
+      />
     </>
   );
 }
