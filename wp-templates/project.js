@@ -13,7 +13,11 @@ import {
   SEO,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { buildKeywordString, buildMetaDescription } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildKeywordString,
+  buildMetaDescription,
+} from 'utilities';
 
 export default function Component(props) {
   // Loading state for previews
@@ -42,6 +46,8 @@ export default function Component(props) {
         description={description}
         keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
+        imageAlt={featuredImage?.node?.altText}
+        url={buildAbsoluteUrl(props?.data?.project?.uri || '/projects/')}
       />
 
       <Header menuItems={primaryMenu} />
@@ -74,6 +80,7 @@ Component.query = gql`
     $asPreview: Boolean = false
   ) {
     project(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+      uri
       projectFields {
         title: projectTitle
         summary

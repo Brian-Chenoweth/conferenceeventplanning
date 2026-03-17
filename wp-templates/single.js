@@ -12,7 +12,14 @@ import {
   SEO,
   TaxonomyTerms,
 } from 'components';
-import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildArticleSchema,
+  buildKeywordString,
+  buildMetaDescription,
+  pageTitle,
+  resolveSeoImage,
+} from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
 export default function Component(props) {
@@ -25,7 +32,8 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, date, author } = props.data.post;
+  const { title, content, featuredImage, date, modified, author, uri } =
+    props.data.post;
   const description = buildMetaDescription({
     title,
     content,
@@ -35,6 +43,16 @@ export default function Component(props) {
     title,
     content,
     seedKeywords: ['blog', 'conference planning', 'event planning'],
+  });
+  const canonicalUrl = buildAbsoluteUrl(uri || '/');
+  const articleSchema = buildArticleSchema({
+    headline: title,
+    description,
+    url: canonicalUrl,
+    image: resolveSeoImage(featuredImage?.node?.sourceUrl),
+    datePublished: date,
+    dateModified: modified,
+    authorName: author?.node?.name,
   });
 
   return (
@@ -48,6 +66,10 @@ export default function Component(props) {
         description={description}
         keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
+        imageAlt={featuredImage?.node?.altText}
+        url={canonicalUrl}
+        type="article"
+        structuredData={articleSchema}
       />
       <Header
         title={siteTitle}
@@ -87,8 +109,10 @@ Component.query = gql`
   ) {
     post(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
+      uri
       content
       date
+      modified
       author {
         node {
           name

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button, Footer, Header, Main, NavigationMenu, SEO } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import styles from 'styles/pages/_404.module.scss';
-import { buildKeywordString } from 'utilities';
+import { buildAbsoluteUrl, buildKeywordString } from 'utilities';
 
 export default function Page() {
   const { data: pageData, loading: pageLoading } = useQuery(Page.query, {
@@ -36,7 +36,14 @@ export default function Page() {
 
   return (
     <>
-      <SEO title={pageTitle} description={description} keywords={keywords} />
+      <SEO
+        title={pageTitle}
+        description={description}
+        keywords={keywords}
+        url={buildAbsoluteUrl('/404/')}
+        noindex
+        noarchive
+      />
 
       <Header
         title={siteTitle}

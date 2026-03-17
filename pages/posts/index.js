@@ -14,7 +14,12 @@ import {
   NavigationMenu,
 } from 'components';
 import { getNextStaticProps } from '@faustwp/core';
-import { buildKeywordString, pageTitle } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildCollectionPageSchema,
+  buildKeywordString,
+  pageTitle,
+} from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
 
@@ -42,6 +47,12 @@ export default function Page() {
       'conference planning blog',
     ],
   });
+  const canonicalUrl = buildAbsoluteUrl('/posts/');
+  const collectionSchema = buildCollectionPageSchema({
+    name: 'Latest Posts',
+    description,
+    url: canonicalUrl,
+  });
 
   return (
     <>
@@ -49,6 +60,8 @@ export default function Page() {
         title={pageTitle(data?.generalSettings)}
         description={description}
         keywords={keywords}
+        url={canonicalUrl}
+        structuredData={collectionSchema}
       />
 
       <Header menuItems={primaryMenu} />

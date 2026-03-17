@@ -14,7 +14,12 @@ import {
   NavigationMenu,
 } from 'components';
 import { getNextStaticProps } from '@faustwp/core';
-import { buildKeywordString, pageTitle } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildCollectionPageSchema,
+  buildKeywordString,
+  pageTitle,
+} from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
 
@@ -42,12 +47,20 @@ export default function Page() {
       'event portfolio',
     ],
   });
+  const canonicalUrl = buildAbsoluteUrl('/projects/');
+  const collectionSchema = buildCollectionPageSchema({
+    name: 'Projects',
+    description,
+    url: canonicalUrl,
+  });
   return (
     <>
       <SEO
         title={pageTitle(data?.generalSettings, 'Projects')}
         description={description}
         keywords={keywords}
+        url={canonicalUrl}
+        structuredData={collectionSchema}
       />
 
       <Header menuItems={primaryMenu} />

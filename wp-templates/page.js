@@ -5,7 +5,12 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildKeywordString,
+  buildMetaDescription,
+  pageTitle,
+} from 'utilities';
 
 import {
   Header,
@@ -52,7 +57,9 @@ export default function Component(props) {
   const navTwo = props?.data?.footerTertiaryMenuItems?.nodes ?? [];
   const resources = props?.data?.resourcesFooterMenuItems?.nodes ?? [];
 
-  const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
+  const { title, content, featuredImage, uri } = props?.data?.page ?? {
+    title: '',
+  };
   const description = buildMetaDescription({
     title,
     content,
@@ -78,6 +85,8 @@ export default function Component(props) {
         description={description}
         keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
+        imageAlt={featuredImage?.node?.altText}
+        url={buildAbsoluteUrl(uri || '/')}
       />
       <Header
         title={siteTitle}
@@ -138,6 +147,7 @@ Component.query = gql`
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
+      uri
       content
       ...FeaturedImageFragment
     }

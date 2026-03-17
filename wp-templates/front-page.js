@@ -19,7 +19,11 @@ import {
   HomepageEventHighlights,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { buildKeywordString } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildKeywordString,
+  buildWebsiteSchema,
+} from 'utilities';
 
 export default function Component() {
   const { data, loading } = useQuery(Component.query, {
@@ -62,6 +66,9 @@ export default function Component() {
         title={siteTitle}
         description={homeDescription || siteDescription}
         keywords={homeKeywords}
+        url={buildAbsoluteUrl('/')}
+        type="website"
+        structuredData={buildWebsiteSchema()}
       />
 
       <Header

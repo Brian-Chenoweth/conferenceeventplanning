@@ -1,6 +1,12 @@
 import { gql, useQuery } from '@apollo/client';
 import appConfig from 'app.config';
-import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
+import {
+  buildAbsoluteUrl,
+  buildCollectionPageSchema,
+  buildKeywordString,
+  buildMetaDescription,
+  pageTitle,
+} from 'utilities';
 
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
@@ -42,6 +48,12 @@ export default function Archive(props) {
     content: data?.nodeByUri?.description,
     seedKeywords: [name, 'archive', 'conference planning'],
   });
+  const canonicalUrl = buildAbsoluteUrl(uri || '/');
+  const collectionSchema = buildCollectionPageSchema({
+    name: archiveTitle,
+    description: archiveDescription || siteDescription,
+    url: canonicalUrl,
+  });
 
   return (
     <>
@@ -49,6 +61,8 @@ export default function Archive(props) {
         title={pageTitle(props?.data?.generalSettings, archiveTitle, siteTitle)}
         description={archiveDescription || siteDescription}
         keywords={archiveKeywords}
+        url={canonicalUrl}
+        structuredData={collectionSchema}
       />
       <Header
         title={siteTitle}

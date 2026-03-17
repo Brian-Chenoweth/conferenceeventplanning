@@ -3,6 +3,7 @@ import * as MENUS from 'constants/menus';
 
 import { gql, useQuery } from '@apollo/client';
 import { getNextStaticProps } from '@faustwp/core';
+import { useRouter } from 'next/router';
 import {
   Button,
   Header,
@@ -14,14 +15,50 @@ import {
   SEO,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
-import { buildKeywordString } from 'utilities';
+import { buildAbsoluteUrl, buildKeywordString } from 'utilities';
 
 export default function Page() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+
+    const nextQuery =
+      typeof router.query.q === 'string' ? router.query.q : '';
+
+    setSearchQuery((currentValue) =>
+      currentValue === nextQuery ? currentValue : nextQuery
+    );
+  }, [router.isReady, router.query.q]);
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+
+    const currentQuery =
+      typeof router.query.q === 'string' ? router.query.q : '';
+
+    if (currentQuery === searchQuery) {
+      return;
+    }
+
+    router.replace(
+      {
+        pathname: '/search',
+        query: searchQuery ? { q: searchQuery } : {},
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, [router, router.isReady, router.query.q, searchQuery]);
 
   const { data: pageData, loading: pageLoading } = useQuery(Page.query, {
     variables: Page.variables(),
@@ -87,6 +124,8 @@ export default function Page() {
         }
         description={searchDescription || siteDescription}
         keywords={searchKeywords}
+        url={buildAbsoluteUrl('/search/')}
+        noindex
       />
 
       <Header

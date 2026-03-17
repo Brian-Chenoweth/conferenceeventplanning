@@ -3,6 +3,28 @@
  */
 const appConfig = {
   /**
+   * The canonical public URL for this site.
+   */
+  siteUrl: 'https://www.calpolyconferences.org',
+
+  /**
+   * Organization details used for technical SEO metadata.
+   */
+  organization: {
+    name: 'Cal Poly Conference and Event Planning',
+    legalName: 'Cal Poly Partners',
+    phone: '+1-805-756-7600',
+    email: 'cep@calpoly.edu',
+    address: {
+      streetAddress: '1 Grand Avenue',
+      addressLocality: 'San Luis Obispo',
+      addressRegion: 'CA',
+      postalCode: '93407',
+      addressCountry: 'US',
+    },
+  },
+
+  /**
    * The number of posts to fetch per 'page'.
    */
   postsPerPage: 9,
