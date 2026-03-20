@@ -3,6 +3,33 @@ import Link from 'next/link';
 import { forwardRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
+const INTERNAL_HOSTNAMES = new Set([
+  'calpolyconferences.org',
+  'www.calpolyconferences.org',
+]);
+
+function normalizeMenuPath(path = '') {
+  if (!path) {
+    return '';
+  }
+
+  if (!/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  try {
+    const parsedUrl = new URL(path);
+
+    if (!INTERNAL_HOSTNAMES.has(parsedUrl.hostname.toLowerCase())) {
+      return path;
+    }
+
+    return `${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}` || '/';
+  } catch {
+    return path;
+  }
+}
+
 const NavigationMenu = forwardRef(function NavigationMenu(
   {
     menuItems,
@@ -53,6 +80,7 @@ const NavigationMenu = forwardRef(function NavigationMenu(
       const isOpen = !!openItems[item.id];
       const submenuId = `submenu-${item.id}`;
       const useMobileToggle = isMobile && hasChildren;
+      const normalizedPath = normalizeMenuPath(item.path);
 
       return (
         <li
@@ -78,7 +106,7 @@ const NavigationMenu = forwardRef(function NavigationMenu(
                 {item.label ?? ''}
               </button>
             ) : (
-              <Link legacyBehavior href={item.path ?? ''} passHref>
+              <Link legacyBehavior href={normalizedPath} passHref>
                 <a className="menuLink" onClick={() => onNavigate?.()}>
                   {item.label ?? ''}
                 </a>
