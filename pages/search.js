@@ -4,6 +4,7 @@ import * as MENUS from 'constants/menus';
 import { gql, useQuery } from '@apollo/client';
 import { getNextStaticProps } from '@faustwp/core';
 import { useRouter } from 'next/router';
+import { useDeferredValue, useEffect, useState } from 'react';
 import {
   Button,
   Header,
@@ -15,7 +16,6 @@ import {
   SEO,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import { useEffect, useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
@@ -24,6 +24,7 @@ import { buildAbsoluteUrl, buildKeywordString } from 'utilities';
 export default function Page() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery.trim());
 
   useEffect(() => {
     if (!router.isReady) {
@@ -45,20 +46,21 @@ export default function Page() {
 
     const currentQuery =
       typeof router.query.q === 'string' ? router.query.q : '';
+    const nextQuery = deferredSearchQuery;
 
-    if (currentQuery === searchQuery) {
+    if (currentQuery === nextQuery) {
       return;
     }
 
     router.replace(
       {
         pathname: '/search',
-        query: searchQuery ? { q: searchQuery } : {},
+        query: nextQuery ? { q: nextQuery } : {},
       },
       undefined,
       { shallow: true }
     );
-  }, [router, router.isReady, router.query.q, searchQuery]);
+  }, [deferredSearchQuery, router, router.isReady, router.query.q]);
 
   const { data: pageData, loading: pageLoading } = useQuery(Page.query, {
     variables: Page.variables(),
@@ -73,9 +75,9 @@ export default function Page() {
     variables: {
       first: appConfig.postsPerPage,
       after: '',
-      search: searchQuery,
+      search: deferredSearchQuery,
     },
-    skip: searchQuery === '',
+    skip: deferredSearchQuery === '',
     fetchPolicy: 'network-only',
   });
 
@@ -124,7 +126,7 @@ export default function Page() {
         }
         description={searchDescription || siteDescription}
         keywords={searchKeywords}
-        url={buildAbsoluteUrl('/search/')}
+        url={buildAbsoluteUrl('/search')}
         noindex
       />
 
@@ -169,6 +171,7 @@ export default function Page() {
                     variables: {
                       after:
                         searchResultsData?.contentNodes?.pageInfo?.endCursor,
+                      search: deferredSearchQuery,
                     },
                   });
                 }}

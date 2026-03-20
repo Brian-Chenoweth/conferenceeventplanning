@@ -15,6 +15,7 @@ import {
 import {
   buildAbsoluteUrl,
   buildArticleSchema,
+  buildBreadcrumbSchema,
   buildKeywordString,
   buildMetaDescription,
   pageTitle,
@@ -54,6 +55,10 @@ export default function Component(props) {
     dateModified: modified,
     authorName: author?.node?.name,
   });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: buildAbsoluteUrl('/') },
+    { name: title, url: canonicalUrl },
+  ]);
 
   return (
     <>
@@ -69,7 +74,7 @@ export default function Component(props) {
         imageAlt={featuredImage?.node?.altText}
         url={canonicalUrl}
         type="article"
-        structuredData={articleSchema}
+        structuredData={[articleSchema, breadcrumbSchema]}
       />
       <Header
         title={siteTitle}

@@ -21,6 +21,7 @@ import {
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import {
   buildAbsoluteUrl,
+  buildBreadcrumbSchema,
   buildKeywordString,
   buildWebsiteSchema,
 } from 'utilities';
@@ -60,6 +61,12 @@ export default function Component() {
       'event coordination',
     ],
   });
+  const structuredData = [
+    buildWebsiteSchema(),
+    buildBreadcrumbSchema([
+      { name: 'Home', url: buildAbsoluteUrl('/') },
+    ]),
+  ];
   return (
     <>
       <SEO
@@ -68,7 +75,7 @@ export default function Component() {
         keywords={homeKeywords}
         url={buildAbsoluteUrl('/')}
         type="website"
-        structuredData={buildWebsiteSchema()}
+        structuredData={structuredData}
       />
 
       <Header

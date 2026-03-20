@@ -32,21 +32,29 @@ export default function SearchResults({ searchResults, isLoading }) {
     <>
       {searchResults?.map((node) => (
         <div key={node.databaseId} className={styles.result}>
-          <Link legacyBehavior href={node.uri}>
-            <a>
-              <h2 className={styles.title}>{node.title}</h2>
-            </a>
-          </Link>
-          <div className={styles.meta}>
-            <time className={styles.date} dateTime={node.date}>
-              <FormatDate date={node.date} />
-            </time>
-          </div>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: node.excerpt,
-            }}
-          ></div>
+          {node.uri ? (
+            <Link legacyBehavior href={node.uri}>
+              <a>
+                <h2 className={styles.title}>{node.title || 'Untitled result'}</h2>
+              </a>
+            </Link>
+          ) : (
+            <h2 className={styles.title}>{node.title || 'Untitled result'}</h2>
+          )}
+          {node.date ? (
+            <div className={styles.meta}>
+              <time className={styles.date} dateTime={node.date}>
+                <FormatDate date={node.date} />
+              </time>
+            </div>
+          ) : null}
+          {node.excerpt ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: node.excerpt,
+              }}
+            ></div>
+          ) : null}
         </div>
       ))}
 

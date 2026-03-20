@@ -15,6 +15,7 @@ const appConfig = {
     legalName: 'Cal Poly Partners',
     phone: '+1-805-756-7600',
     email: 'cep@calpoly.edu',
+    logoPath: '/logo.png',
     address: {
       streetAddress: '1 Grand Avenue',
       addressLocality: 'San Luis Obispo',

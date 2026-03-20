@@ -62,7 +62,7 @@ export default function MyApp({ Component, pageProps }) {
 
       <ThemeStyles />
       <FaustProvider pageProps={pageProps}>
-        <Component {...pageProps} key={router.asPath} />
+        <Component {...pageProps} key={normalizedPath} />
       </FaustProvider>
     </>
   );

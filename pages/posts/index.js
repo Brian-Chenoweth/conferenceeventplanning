@@ -16,6 +16,7 @@ import {
 import { getNextStaticProps } from '@faustwp/core';
 import {
   buildAbsoluteUrl,
+  buildBreadcrumbSchema,
   buildCollectionPageSchema,
   buildKeywordString,
   pageTitle,
@@ -53,6 +54,10 @@ export default function Page() {
     description,
     url: canonicalUrl,
   });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: buildAbsoluteUrl('/') },
+    { name: 'Posts', url: canonicalUrl },
+  ]);
 
   return (
     <>
@@ -61,7 +66,7 @@ export default function Page() {
         description={description}
         keywords={keywords}
         url={canonicalUrl}
-        structuredData={collectionSchema}
+        structuredData={[collectionSchema, breadcrumbSchema]}
       />
 
       <Header menuItems={primaryMenu} />

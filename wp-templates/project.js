@@ -15,6 +15,7 @@ import {
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import {
   buildAbsoluteUrl,
+  buildBreadcrumbSchema,
   buildKeywordString,
   buildMetaDescription,
 } from 'utilities';
@@ -39,6 +40,12 @@ export default function Component(props) {
     content: `${summary ?? ''} ${contentArea ?? ''}`,
     seedKeywords: ['project', 'conference planning', 'event planning'],
   });
+  const canonicalUrl = buildAbsoluteUrl(props?.data?.project?.uri || '/projects/');
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: buildAbsoluteUrl('/') },
+    { name: 'Projects', url: buildAbsoluteUrl('/projects') },
+    { name: title, url: canonicalUrl },
+  ]);
   return (
     <>
       <SEO
@@ -47,7 +54,8 @@ export default function Component(props) {
         keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
         imageAlt={featuredImage?.node?.altText}
-        url={buildAbsoluteUrl(props?.data?.project?.uri || '/projects/')}
+        url={canonicalUrl}
+        structuredData={breadcrumbSchema}
       />
 
       <Header menuItems={primaryMenu} />

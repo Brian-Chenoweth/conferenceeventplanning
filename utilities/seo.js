@@ -57,11 +57,39 @@ export function buildOrganizationSchema() {
     url: DEFAULT_SITE_URL,
     telephone: organization.phone,
     email: organization.email,
+    logo: organization.logoPath
+      ? buildAbsoluteUrl(organization.logoPath)
+      : undefined,
     address: {
       '@type': 'PostalAddress',
       ...organization.address,
     },
   };
+}
+
+export function buildLocalBusinessSchema() {
+  const { organization } = appConfig;
+
+  return JSON.parse(JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: organization.name,
+    legalName: organization.legalName,
+    url: DEFAULT_SITE_URL,
+    image: organization.logoPath
+      ? buildAbsoluteUrl(organization.logoPath)
+      : undefined,
+    telephone: organization.phone,
+    email: organization.email,
+    areaServed: {
+      '@type': 'City',
+      name: organization.address.addressLocality,
+    },
+    address: {
+      '@type': 'PostalAddress',
+      ...organization.address,
+    },
+  }));
 }
 
 export function buildWebsiteSchema() {
@@ -72,10 +100,69 @@ export function buildWebsiteSchema() {
     url: DEFAULT_SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${buildAbsoluteUrl('/search/')}?q={search_term_string}`,
+      target: `${buildAbsoluteUrl('/search')}?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };
+}
+
+function humanizeSegment(segment = '') {
+  return segment
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+export function buildBreadcrumbSchema(items = []) {
+  const itemListElement = items
+    .filter((item) => item?.name && item?.url)
+    .map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    }));
+
+  if (!itemListElement.length) {
+    return null;
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
+}
+
+export function buildBreadcrumbItemsFromPath(path = '/', currentTitle) {
+  const normalizedPath = normalizePath(path);
+  const segments = normalizedPath.split('/').filter(Boolean);
+  const items = [
+    {
+      name: 'Home',
+      url: buildAbsoluteUrl('/'),
+    },
+  ];
+
+  if (!segments.length) {
+    return items;
+  }
+
+  segments.forEach((segment, index) => {
+    const segmentPath = `/${segments.slice(0, index + 1).join('/')}`;
+    const isLastSegment = index === segments.length - 1;
+
+    items.push({
+      name:
+        isLastSegment && currentTitle
+          ? currentTitle
+          : humanizeSegment(segment),
+      url: buildAbsoluteUrl(segmentPath),
+    });
+  });
+
+  return items;
 }
 
 export function buildArticleSchema({

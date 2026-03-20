@@ -7,6 +7,8 @@ import { createPortal } from 'react-dom';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import {
   buildAbsoluteUrl,
+  buildBreadcrumbItemsFromPath,
+  buildBreadcrumbSchema,
   buildKeywordString,
   buildMetaDescription,
   pageTitle,
@@ -70,6 +72,9 @@ export default function Component(props) {
     content,
     seedKeywords: ['conference planning', 'event planning'],
   });
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    buildBreadcrumbItemsFromPath(uri || '/', title)
+  );
 
   // Replace the marker with a stable placeholder DIV for SSR
   const htmlWithSlot = (content ?? '').split(TOKEN).join(SLOT_HTML);
@@ -87,6 +92,7 @@ export default function Component(props) {
         imageUrl={featuredImage?.node?.sourceUrl}
         imageAlt={featuredImage?.node?.altText}
         url={buildAbsoluteUrl(uri || '/')}
+        structuredData={breadcrumbSchema}
       />
       <Header
         title={siteTitle}

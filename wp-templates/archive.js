@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import appConfig from 'app.config';
 import {
   buildAbsoluteUrl,
+  buildBreadcrumbSchema,
   buildCollectionPageSchema,
   buildKeywordString,
   buildMetaDescription,
@@ -54,6 +55,10 @@ export default function Archive(props) {
     description: archiveDescription || siteDescription,
     url: canonicalUrl,
   });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: buildAbsoluteUrl('/') },
+    { name: archiveTitle, url: canonicalUrl },
+  ]);
 
   return (
     <>
@@ -62,7 +67,7 @@ export default function Archive(props) {
         description={archiveDescription || siteDescription}
         keywords={archiveKeywords}
         url={canonicalUrl}
-        structuredData={collectionSchema}
+        structuredData={[collectionSchema, breadcrumbSchema]}
       />
       <Header
         title={siteTitle}

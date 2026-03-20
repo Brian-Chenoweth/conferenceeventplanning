@@ -4,7 +4,10 @@ import { buildKeywordString, buildMetaDescription, stripHtml } from './seoMeta';
 import {
   buildAbsoluteUrl,
   buildArticleSchema,
+  buildBreadcrumbItemsFromPath,
+  buildBreadcrumbSchema,
   buildCollectionPageSchema,
+  buildLocalBusinessSchema,
   buildOrganizationSchema,
   buildRobotsDirectives,
   buildWebsiteSchema,
@@ -15,8 +18,11 @@ import {
 export {
   buildAbsoluteUrl,
   buildArticleSchema,
+  buildBreadcrumbItemsFromPath,
+  buildBreadcrumbSchema,
   buildCollectionPageSchema,
   buildKeywordString,
+  buildLocalBusinessSchema,
   buildMetaDescription,
   buildOrganizationSchema,
   buildRobotsDirectives,

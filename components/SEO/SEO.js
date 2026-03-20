@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import {
   buildAbsoluteUrl,
+  buildLocalBusinessSchema,
   buildOrganizationSchema,
   buildRobotsDirectives,
   getSiteUrl,
@@ -58,6 +59,7 @@ export default function SEO({
   const robots = buildRobotsDirectives({ noindex, nofollow, noarchive });
   const schemaItems = [
     buildOrganizationSchema(),
+    !noindex ? buildLocalBusinessSchema() : null,
     ...(Array.isArray(structuredData)
       ? structuredData
       : structuredData
