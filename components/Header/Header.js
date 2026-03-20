@@ -31,10 +31,14 @@ export default function Header({ className, menuItems }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      const nextIsScrolled = window.scrollY > 0;
+      setIsScrolled((currentValue) =>
+        currentValue === nextIsScrolled ? currentValue : nextIsScrolled
+      );
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

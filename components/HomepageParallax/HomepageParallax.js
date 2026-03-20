@@ -1,7 +1,12 @@
-import { useEffect, useState, useMemo } from 'react';
-import { Parallax } from 'react-parallax';
+import dynamic from 'next/dynamic';
+import { useEffect, useMemo, useState } from 'react';
 
 import styles from './HomepageParallax.module.scss';
+
+const Parallax = dynamic(
+  () => import('react-parallax').then((module) => module.Parallax),
+  { ssr: false }
+);
 
 // Finer-grained widths so phones don't jump to 640/750 unnecessarily
 const WIDTHS = [320, 360, 480, 540, 600, 640, 750, 828, 1080, 1200, 1920];
@@ -19,16 +24,29 @@ function nextSrcSet(path) {
 }
 
 export default function HomepageParallax() {
+  const [isDesktop, setIsDesktop] = useState(false);
   const [height, setHeight] = useState(750);
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 768px)');
+
     const updateHeight = () => {
-      if (window.innerWidth < 480) setHeight(300);
-      else if (window.innerWidth < 768) setHeight(400);
-      else setHeight(750);
+      const width = window.innerWidth;
+
+      setIsDesktop(desktopQuery.matches);
+
+      if (width < 480) {
+        setHeight(300);
+      } else if (width < 768) {
+        setHeight(400);
+      } else {
+        setHeight(750);
+      }
     };
+
     updateHeight();
     window.addEventListener('resize', updateHeight);
+
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
@@ -43,20 +61,32 @@ export default function HomepageParallax() {
 
   return (
     <div className={styles.para}>
-      <Parallax
-        blur={0}
-        strength={700}
-        /* Fallback for SSR / non-srcset */
-        bgImage={ssrFallback}
-        /* Next-optimized responsive sources */
-        bgImageSrcSet={srcSet}
-        bgImageSizes={sizes}
-        bgImageAlt="Dessert table"
-        bgClassName={styles.bg}
-        bgImageStyle={{ objectFit: 'cover', objectPosition: 'center' }}
-      >
-        <div style={{ height }} />
-      </Parallax>
+      {isDesktop ? (
+        <Parallax
+          blur={0}
+          strength={700}
+          bgImage={ssrFallback}
+          bgImageSrcSet={srcSet}
+          bgImageSizes={sizes}
+          bgImageAlt="Dessert table"
+          bgClassName={styles.bg}
+          bgImageStyle={{ objectFit: 'cover', objectPosition: 'center' }}
+        >
+          <div style={{ height }} />
+        </Parallax>
+      ) : (
+        <div
+          aria-hidden="true"
+          className={styles.bg}
+          style={{
+            height,
+            backgroundImage: `url("${ssrFallback}")`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        />
+      )}
     </div>
   );
 }
