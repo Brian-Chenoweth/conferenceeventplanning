@@ -53,6 +53,7 @@ export default function SEO({
   const siteUrl = getSiteUrl();
   const canonicalUrl =
     url || buildAbsoluteUrl(canonicalPath || router?.asPath || '/');
+  const shouldRenderCanonical = Boolean(canonicalUrl) && !noindex;
   const resolvedImageUrl = resolveSeoImage(imageUrl);
   const robots = buildRobotsDirectives({ noindex, nofollow, noarchive });
   const schemaItems = [
@@ -80,7 +81,9 @@ export default function SEO({
           <link rel="stylesheet" href={typekitHref} />
           <link rel="stylesheet" href={googleFontsHref} />
         </noscript>
-        <link rel="canonical" href={canonicalUrl} />
+        {shouldRenderCanonical && (
+          <link rel="canonical" href={canonicalUrl} />
+        )}
         <meta name="robots" content={robots} />
         <meta name="googlebot" content={robots} />
         <meta name="theme-color" content="#0f5c4d" />
@@ -126,7 +129,7 @@ export default function SEO({
           </>
         )}
 
-        {canonicalUrl && (
+        {shouldRenderCanonical && (
           <>
             <meta property="og:url" content={canonicalUrl} />
             <meta property="twitter:url" content={canonicalUrl} />

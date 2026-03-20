@@ -7,7 +7,7 @@ function normalizePath(path = '/') {
   const [cleanPath] = pathname.split('?');
   const normalized = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
 
-  return normalized === '/' ? '/' : normalized.replace(/\/+$/, '/') ;
+  return normalized === '/' ? '/' : normalized.replace(/\/+$/, '');
 }
 
 export function getSiteUrl() {
