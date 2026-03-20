@@ -1,5 +1,10 @@
 // Minimal, framework-free lightbox for your existing WP HTML
 (function () {
+  if (window.__teamLightboxInitialized) {
+    return;
+  }
+  window.__teamLightboxInitialized = true;
+
   const bios = {
     "erin-scherer": {
       title: "Erin Scherer",
@@ -84,58 +89,71 @@
     document.documentElement.style.overflow = '';
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.body.appendChild(overlay);
+  function ensureOverlayMounted() {
+    if (!document.body.contains(overlay)) {
+      document.body.appendChild(overlay);
+    }
+  }
 
-    // Delegate clicks from your team section
-    const container = document.querySelector('.team');
-    if (!container) return;
+  function handleTeamClick(e) {
+    const a = e.target && e.target.closest('a');
+    if (!a) return;
 
-    container.addEventListener('click', (e) => {
-      const a = e.target && e.target.closest('a');
-      if (!a) return;
+    const teamContainer = a.closest('.team');
+    if (!teamContainer) return;
 
-      const text = (a.textContent || '').trim();
-      if (!/^Meet\s+/i.test(text)) return;
+    const text = (a.textContent || '').trim();
+    if (!/^Meet\s+/i.test(text)) return;
 
-      e.preventDefault();
+    e.preventDefault();
 
-      const card = a.closest('.wp-block-column');
-      if (!card) return;
+    const card = a.closest('.wp-block-column');
+    if (!card) return;
 
-      const name = (card.querySelector('h3')?.textContent || '').trim();
-      const role = (card.querySelector('h3 + p')?.textContent || '').trim();
+    const name = (card.querySelector('h3')?.textContent || '').trim();
+    const role = (card.querySelector('h3 + p')?.textContent || '').trim();
 
-      const slug = slugify(name);
-      const b = bios[slug] || {};
+    const slug = slugify(name);
+    const b = bios[slug] || {};
 
-      const safeTitle = b.title || name || 'Team Member';
-      const safeRole = b.role || role || '';
+    const safeTitle = b.title || name || 'Team Member';
+    const safeRole = b.role || role || '';
 
-      // --- STATIC IMAGE FROM /public/team ---
-      const staticBase = '/team/';
-      const staticName = b.img || `${slug}.jpg`; // fallback: slug.jpg
-      const staticSrc = `${staticBase}${staticName}`;
-      const imgAlt = safeTitle;
+    const staticBase = '/team/';
+    const staticName = b.img || `${slug}.jpg`;
+    const staticSrc = `${staticBase}${staticName}`;
+    const imgAlt = safeTitle;
 
-      const html = `
-        <div class="content-wrap">
-          <div>
-            <img
-              src="${staticSrc}"
-              alt="${imgAlt}"
-              loading="lazy"
-              onerror="this.style.display='none'"
-            />
-          </div>
-          <div>
-            ${safeRole ? `<h4 style="margin-top:50px;">${safeRole}</h4>` : ''}
-            <h3>${safeTitle}</h3>
-            <div>${b.html || '<p>No bio available yet.</p>'}</div>
-          </div>
+    const html = `
+      <div class="content-wrap">
+        <div>
+          <img
+            src="${staticSrc}"
+            alt="${imgAlt}"
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
         </div>
-      `;
-      show(html);
-    });
-  });
+        <div>
+          ${safeRole ? `<h4 style="margin-top:50px;">${safeRole}</h4>` : ''}
+          <h3>${safeTitle}</h3>
+          <div>${b.html || '<p>No bio available yet.</p>'}</div>
+        </div>
+      </div>
+    `;
+
+    ensureOverlayMounted();
+    show(html);
+  }
+
+  function init() {
+    ensureOverlayMounted();
+    document.addEventListener('click', handleTeamClick);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 })();
